@@ -19,7 +19,7 @@
   <form class="form">
     <div class="inputSerial">
       <label for="inSerial">Serial Number</label><br>
-      <input type="text" class="inSerial" name="inSerial" spellcheck="false" required value="tk12345">
+      <input type="text" class="inSerial" name="inSerial" spellcheck="false" required>
     </div>
 
     <div class="inputTipos">
@@ -48,13 +48,31 @@
   </form>
 
   <div class="alert-success">
-    <span class="closebtn">&times;</span>  
-    <strong>Success!</strong> Novo registro foi enviado corretamente!
+    <strong>Success!</strong> Novo registro enviado corretamente.
   </div>
   <div class="alert-warning">
-    <span class="closebtn">&times;</span>  
-    <strong>Warning!</strong> Verifique se os campos foram preenchidos!.
+    <strong>Warning!</strong> Verifique se os campos foram preenchidos.
   </div>
+
+<!-- TESTE -->
+<br><br>
+  <script>
+    function exportData() {
+        var ary = JSON.stringify(localStorage)
+        var blob = new Blob([ary], {type: "text/csv"});
+        var url = URL.createObjectURL(blob);
+        var a = document.querySelector("#results"); // id of the <a> element to render the download link
+        a.href = url;
+        a.download = "file.json";
+
+    }
+</script>
+</head>
+<body>
+    <button onclick="exportData()">Download</button><br><br>
+    <a id="results">Data from local store</a>
+    </body>
+
 
 </body>
 

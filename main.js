@@ -46,7 +46,7 @@ class Registro {
 function getPercentual(ciclos, ciclosPass) {
   if (ciclos && ciclosPass) {
     return (ciclosPass / ciclos) * 100 + "%"
-  }else {
+  } else {
     return ""
   }
 }
@@ -54,20 +54,19 @@ function getPercentual(ciclos, ciclosPass) {
 form.addEventListener("submit", function (event) {
   event.preventDefault();
   if (validaSelected()) {
-    let registro = new Registro(inSerial.value, inFalha.value, inCicloTest.value, inCicloPass.value)
-    console.log(registro)
-    alertWarningMsg.classList.remove('show-warning')
+    localStoreData()
+
+    resetAlerts()
     alertSuccessMsg.classList.add('show-success')
-    closeInputFalhas()
+    setTimeout(() => { resetAlerts() }, 3000);
+    colapseInputFalhas()
     resetSelectColors()
     form.reset()
-  }else {
-    alertSuccessMsg.classList.remove('show-success')
+  } else {
     alertWarningMsg.classList.add('show-warning')
   }
+  selectedTipo = null
 })
-
-///ENVIADO ALERT?????????????????????????????????????????????????????????????????
 
 function validaSelected() {
   if (selectedTipo === "Teste" || selectedTipo === "Aprovado") {
@@ -81,7 +80,7 @@ function validaSelected() {
   }
 }
 
-function closeInputFalhas() {
+function colapseInputFalhas() {
   inputFalhas.classList.remove("toggleInputFalhas");
   inFalha.value = ""
   inCicloTest.value = ""
@@ -94,8 +93,13 @@ function resetSelectColors() {
   selectAprovado.style.cssText += 'background-color:#eee';
 }
 
+function resetAlerts() {
+  alertWarningMsg.classList.remove('show-warning')
+  alertSuccessMsg.classList.remove('show-success')
+}
+
 function selectTipoTeste() {
-  closeInputFalhas()
+  colapseInputFalhas()
   resetSelectColors()
   selectTeste.style.cssText += 'background-color:#0097D1';
   selectedTipo = 'Teste'
@@ -109,8 +113,20 @@ function selectTipoFalha() {
 }
 
 function selectTipoAprovado() {
-  closeInputFalhas()
+  colapseInputFalhas()
   resetSelectColors()
   selectAprovado.style.cssText += 'background-color:#60BAAE';
   selectedTipo = 'Aprovado'
+}
+
+function localStoreData() {
+  const stored = JSON.parse(localStorage.getItem(inSerial.value));
+  const registro = new Registro(inSerial.value, inFalha.value, inCicloTest.value, inCicloPass.value)
+  if (stored != null) {
+    stored.push(registro)
+    localStorage.setItem(inSerial.value, JSON.stringify(stored))
+  } else {
+    localStorage.setItem(inSerial.value, JSON.stringify([registro]))
+  }
+  console.log(stored)
 }
