@@ -1,0 +1,98 @@
+:root {
+  font-family: 'Montserrat', sans-serif;
+}
+header {
+  background-color: rgb(77, 20, 118);
+  color: #fff;
+}
+
+img {
+  display: inline-block;
+  width: 120px;
+}
+
+h1 {
+  width: 100%;
+  height: 5rem;
+  text-align: center;
+  font-size: 34px;
+}
+
+.form {
+  text-align: center;
+  font-size: 20px;
+  margin: 1rem;
+}
+
+.inputSerial, .inputTipos, .inputFalhas {
+  margin: 4rem 0;
+}
+
+.inputFalhas {
+  display: none;
+}
+
+.toggleInputFalhas {
+  display: block;
+}
+
+.inSerial {
+  width: 72%;
+  height: 3rem;
+  text-align: center;
+  font-size: 24px;
+  margin: .7rem 0;
+  text-transform: uppercase;
+}
+
+.btTipoContainer {
+  display: flex;
+  justify-content: space-evenly;
+  margin: .7rem 0;
+}
+
+.selectTipo {
+  font-size: 20px;
+  width: 30%;
+  height: 3rem;
+  border: solid 1px;
+  border-radius: 3px;
+  border-color: #777;
+  background-color: #eee;
+}
+
+.selectTipo:hover {
+  background-color: #ddd;
+}
+
+label {
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.LabelContainer, .inputContainer {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.labelCiclo, .inCicloTest, .inCicloPass, .labelFalha, .inFalha {
+  font-size: 20px;
+  font-weight: 400;
+  width: 30%;
+  height: 1.5rem;
+  text-align: center;
+  padding: 6px 1px;
+}
+
+.inFalha {
+  text-transform: uppercase;
+}
+
+.btSubmit {
+  background: linear-gradient(90deg, rgba(255,96,0,1) 0%, rgba(255,75,110,1) 49%, rgba(195,9,43,1) 100%);
+  font-size: 18px;
+  color: #fff;
+  width: 70%;
+  height: 2.5rem;
+  margin-top: 2rem;
+}

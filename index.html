@@ -6,25 +6,45 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <link rel="stylesheet" href="reset.css">
   <link rel="stylesheet" href="style.css">
   <script defer src="main.js"></script>
 </head>
 
 <body>
-  <form id="form">
-    <label for="inSerial">Serial:</label><br>
-    <input type="text" id="inSerial" name="inSerial" required
-     value="123"><br>
+  <header>
+    <img src="./public/TRDT_logo-RGB_pref-neg-roxo.png" alt="">
+    <h1>TESTE 24H</h1>
+  </header>
+  <form class="form">
+    <div class="inputSerial">
+      <label for="inSerial">Serial Number</label><br>
+      <input type="text" class="inSerial" name="inSerial" spellcheck="false" required value="tk12345">
+    </div>
 
-    <label for="inTipo">Tipo:</label><br>
-    <input type="text" id="inTipo" name="inTipo" required value="teste"><br>
+    <div class="inputTipos">
+      <label>Registrar</label><br>
+      <div class="btTipoContainer">
+        <input type="button" class="selectTipo" id="selectTeste" value="Teste" onclick="selectTipoTeste()">
+        <input type="button" class="selectTipo" id="selectFalha" value="Falha" onclick="selectTipoFalha()">
+        <input type="button" class="selectTipo" id="selectAprovado" value="Aprovado" onclick="selectTipoAprovado()">
+      </div>
+    </div>
 
-    <label for="inFalha">Falha:</label><br>
-    <input type="text" id="inFalha" name="inFalha" value="gps">
-    <input type="text" id="inCicloTest" name="inCicloTest" value="120">
-    <input type="text" id="inCicloPass" name="inCicloPass" value="135"><br>
+    <div class="inputFalhas">
+      <div class="LabelContainer">
+        <label for="inFalha" class="labelFalha">Falha</label>
+        <label for="inCicloTest" class="labelCiclo">Ciclos Test</label>
+        <label for="inCicloPass" class="labelCiclo">Ciclos Pass</label>
+      </div>
+      <div class="inputContainer">
+        <input type="text" class="inFalha" name="inFalha">
+        <input type="number" class="inCicloTest" name="inCicloTest" min="0">
+        <input type="number" class="inCicloPass" name="inCicloPass" min="0">
+      </div>
+    </div>
 
-    <button type="submit" id="btSubmit">Enviar</button>
+    <button type="submit" class="btSubmit">Enviar</button>
   </form>
 </body>
 
