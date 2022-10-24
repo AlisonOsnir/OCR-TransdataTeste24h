@@ -8,6 +8,8 @@ const selectAprovado = document.getElementById("selectAprovado")
 const inFalha = document.querySelector(".inFalha")
 const inCicloTest = document.querySelector(".inCicloTest")
 const inCicloPass = document.querySelector(".inCicloPass")
+const alertSuccessMsg = document.querySelector(".alert-success")
+const alertWarningMsg = document.querySelector(".alert-warning")
 
 inSerial.focus()
 let selectedTipo = null
@@ -49,17 +51,23 @@ function getPercentual(ciclos, ciclosPass) {
   }
 }
 
-
 form.addEventListener("submit", function (event) {
   event.preventDefault();
   if (validaSelected()) {
     let registro = new Registro(inSerial.value, inFalha.value, inCicloTest.value, inCicloPass.value)
     console.log(registro)
+    alertWarningMsg.classList.remove('show-warning')
+    alertSuccessMsg.classList.add('show-success')
     closeInputFalhas()
     resetSelectColors()
     form.reset()
+  }else {
+    alertSuccessMsg.classList.remove('show-success')
+    alertWarningMsg.classList.add('show-warning')
   }
 })
+
+///ENVIADO ALERT?????????????????????????????????????????????????????????????????
 
 function validaSelected() {
   if (selectedTipo === "Teste" || selectedTipo === "Aprovado") {
@@ -106,5 +114,3 @@ function selectTipoAprovado() {
   selectAprovado.style.cssText += 'background-color:#60BAAE';
   selectedTipo = 'Aprovado'
 }
-
-///ENVIADO ALERT?
