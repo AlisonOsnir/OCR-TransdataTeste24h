@@ -21,10 +21,10 @@ function padTo2Digits(num) {
 function formatDate(date) {
   return (
     `${[
-      date.getFullYear(),
-      padTo2Digits(date.getMonth() + 1),
       padTo2Digits(date.getDate()),
-    ].join('-')} ${[
+      padTo2Digits(date.getMonth() + 1),
+      date.getFullYear(),
+    ].join('/')} ${[
       padTo2Digits(date.getHours()),
       padTo2Digits(date.getMinutes()),
       padTo2Digits(date.getSeconds()),
@@ -120,13 +120,39 @@ function selectTipoAprovado() {
 }
 
 function localStoreData() {
-  const stored = JSON.parse(localStorage.getItem(inSerial.value));
+  const stored = JSON.parse(localStorage.getItem("Registro"));
   const registro = new Registro(inSerial.value, inFalha.value, inCicloTest.value, inCicloPass.value)
   if (stored != null) {
     stored.push(registro)
-    localStorage.setItem(inSerial.value, JSON.stringify(stored))
+    localStorage.setItem("Registro", JSON.stringify(stored))
   } else {
-    localStorage.setItem(inSerial.value, JSON.stringify([registro]))
+    localStorage.setItem("Registro", JSON.stringify([registro]))
   }
-  console.log(stored)
+}
+
+function CSV() {
+  const array = JSON.parse(localStorage.getItem("Registro"));
+
+  // Use first element to choose the keys and the order
+  var keys = Object.keys(array[0]);
+
+  // Build header
+  var result = keys.join(",") + "\n";
+
+  // Add the rows
+  array.forEach(function(obj){
+      result += keys.map(k => obj[k]).join(",") + "\n";
+  });
+  console.log(result)
+  return result
+}
+
+function exportCSV() {
+  var arr = CSV()
+  var blob = new Blob([arr], {type: "text/csv"});
+  var url = URL.createObjectURL(blob);
+  var a = document.querySelector("#results"); // id of the <a> element to render the download link
+  a.href = url;
+  a.download = "file.csv";
+
 }

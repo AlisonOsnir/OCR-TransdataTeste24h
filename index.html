@@ -44,7 +44,9 @@
       </div>
     </div>
 
-    <button type="submit" class="btSubmit">Enviar</button>
+    <button type="submit" class="btSubmit">Enviar</button><br><br>
+    <button onclick="exportCSV()">Export CSV</button>
+    <a id="results">CSV from local storage</a>
   </form>
 
   <div class="alert-success">
@@ -53,25 +55,6 @@
   <div class="alert-warning">
     <strong>Warning!</strong> Verifique se os campos foram preenchidos.
   </div>
-
-<!-- TESTE -->
-<br><br>
-  <script>
-    function exportData() {
-        var ary = JSON.stringify(localStorage)
-        var blob = new Blob([ary], {type: "text/csv"});
-        var url = URL.createObjectURL(blob);
-        var a = document.querySelector("#results"); // id of the <a> element to render the download link
-        a.href = url;
-        a.download = "file.json";
-
-    }
-</script>
-</head>
-<body>
-    <button onclick="exportData()">Download</button><br><br>
-    <a id="results">Data from local store</a>
-    </body>
 
 
 </body>
