@@ -45,7 +45,7 @@ class Registro {
 
 function getPercentual(ciclos, ciclosPass) {
   if (ciclos && ciclosPass) {
-    return (ciclosPass / ciclos) * 100 + "%"
+    return ((ciclosPass / ciclos) * 100).toFixed(2) + "%"
   } else {
     return ""
   }

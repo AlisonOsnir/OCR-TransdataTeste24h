@@ -113,6 +113,11 @@ label {
   border-color: rgb(77, 20, 118);
 }
 
+.exportCSV {
+  display: block;
+  text-align: center;
+}
+
 .alert-success, .alert-warning {
   position: absolute;
   width: 100%;
