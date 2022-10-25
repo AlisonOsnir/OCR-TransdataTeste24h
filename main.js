@@ -1,3 +1,4 @@
+
 const form = document.querySelector(".form")
 const inSerial = document.querySelector(".inSerial")
 const inputFalhas = document.querySelector(".inputFalhas")
@@ -11,7 +12,9 @@ const inCicloPass = document.querySelector(".inCicloPass")
 const alertSuccessMsg = document.querySelector(".alert-success")
 const alertWarningMsg = document.querySelector(".alert-warning")
 
-inSerial.focus()
+
+//inSerial.focus()
+
 let selectedTipo = null
 
 function padTo2Digits(num) {

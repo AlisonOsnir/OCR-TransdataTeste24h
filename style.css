@@ -10,19 +10,22 @@ body {
 }
 
 header {
+  width: 100%;
+  display: block;
   background-color: rgb(77, 20, 118);
   color: #fff;
-  width: 100%;
+  height: 4rem;
 }
 
 header img {
   display: inline-block;
-  width: 120px;
+  /* position: absolute; */
+  width: 100px;
 }
 
 header h1 {
-  width: 100%;
-  height: 5rem;
+  display: inline-block;
+  height: 100%;
   text-align: center;
   font-size: 34px;
 }

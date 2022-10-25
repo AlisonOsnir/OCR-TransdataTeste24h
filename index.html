@@ -9,6 +9,8 @@
   <link rel="stylesheet" href="reset.css">
   <link rel="stylesheet" href="style.css">
   <script defer src="main.js"></script>
+  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+  <script defer src="scanner.js"></script>
 </head>
 
 <body>
@@ -16,6 +18,9 @@
     <img src="./public/TRDT_logo-RGB_pref-neg-roxo.png" alt="">
     <h1>TESTE 24H</h1>
   </header>
+
+  <div id="reader" width="600px"></div>
+
   <form class="form">
     <div class="inputSerial">
       <label for="inSerial">Serial Number</label><br>
@@ -58,8 +63,6 @@
   <div class="alert-warning">
     <strong>Warning!</strong> Verifique se os campos foram preenchidos.
   </div>
-
-
 </body>
 
 </html>
