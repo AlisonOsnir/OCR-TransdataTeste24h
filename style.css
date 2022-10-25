@@ -2,15 +2,13 @@
   font-family: 'Montserrat', sans-serif;
 }
 
-body {
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  overflow: hidden
+* { 
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 header {
-  width: 100%;
   display: block;
   background-color: rgb(77, 20, 118);
   color: #fff;
@@ -36,7 +34,7 @@ header h1 {
 }
 
 .inputSerial, .inputTipos, .inputFalhas {
-  margin: 4rem 0;
+  margin: 3rem 0;
 }
 
 .inputFalhas {
@@ -123,7 +121,7 @@ label {
 }
 
 .alert-success, .alert-warning {
-  position: absolute;
+  position: relative;
   width: 100%;
   bottom: -100px;
   padding: 20px 10px;

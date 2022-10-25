@@ -5,9 +5,12 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Registro Teste24h</title>
   <link rel="stylesheet" href="reset.css">
   <link rel="stylesheet" href="style.css">
+  <!-- TESTE FOTO -->
+  <link rel="stylesheet" href="style-cam.css">
+
   <script defer src="main.js"></script>
   <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
   <script defer src="scanner.js"></script>
@@ -19,7 +22,20 @@
     <h1>TESTE 24H</h1>
   </header>
 
+  <!-- Scanner Option -->
+  <button onclick="startScanner()">Scanner</button>
   <div id="reader" width="600px"></div>
+
+  <!-- TESTE FOTO -->
+  <div class="contentarea">
+    <div class="camera">
+      <video id="video">Video stream not available.</video>
+      <button id="startbutton"></button>
+      <img id="photo" alt="The screen capture will appear in this box." />
+    </div>
+    <canvas id="canvas"> </canvas>
+  </div>
+  <script src="cam.js"></script>
 
   <form class="form">
     <div class="inputSerial">
