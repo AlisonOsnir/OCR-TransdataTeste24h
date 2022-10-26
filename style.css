@@ -29,12 +29,25 @@ header h1 {
   padding-top: 17px;
 }
 
+.optionBtn {
+  display: flex;
+  justify-content: space-evenly;
+}
+.scannerBtn, .camBtn {
+  width: 70px;
+  height: 30px;
+  margin: 5px;
+  border: solid 1px;
+  border-radius: 3px;
+  border-color: rgb(77, 20, 118);
+}
+
 .form {
   text-align: center;
 }
 
 .inputSerial, .inputTipos, .inputFalhas {
-  margin: 3rem 0;
+  margin: 2rem 0;
 }
 
 .inputFalhas {
@@ -89,14 +102,14 @@ label {
 
 .labelCiclo, .inCicloTest, .inCicloPass, .labelFalha, .inFalha {
   font-size: 20px;
-  font-weight: 400;
   width: 30%;
-  height: 1.5rem;
   text-align: center;
   padding: 6px 1px;
+  vertical-align: middle;
 }
 
 .inFalha, .inCicloTest, .inCicloPass{
+  height: 3rem;
   text-transform: uppercase;
   border: solid 1px;
   border-radius: 3px;

@@ -8,7 +8,6 @@
   <title>Registro Teste24h</title>
   <link rel="stylesheet" href="reset.css">
   <link rel="stylesheet" href="style.css">
-  <!-- TESTE FOTO -->
   <link rel="stylesheet" href="style-cam.css">
 
   <script defer src="main.js"></script>
@@ -22,11 +21,15 @@
     <h1>TESTE 24H</h1>
   </header>
 
-  <!-- Scanner Option -->
-  <button onclick="startScanner()">Scanner</button>
+  <!-- Botoes start -->
+  <div class="optionBtn">
+    <button class="scannerBtn" onclick="startScanner()">Scanner</button>
+    <button class="camBtn" onclick="startCam()">Picture</button>
+  </div>
+  <!-- Scanner -->
   <div id="reader" width="600px"></div>
 
-  <!-- TESTE FOTO -->
+  <!-- Camera -->
   <div class="contentarea">
     <div class="camera">
       <video id="video">Video stream not available.</video>

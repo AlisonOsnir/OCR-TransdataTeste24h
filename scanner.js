@@ -11,14 +11,18 @@
 // }).catch(err => {
 //   // handle err
 // });
+const scannerBtn = document.querySelector(".scannerBtn")
 
-let clicked = false;
+let scannerClicked = false;
+const html5QrCode = new Html5Qrcode(/* element id */ "reader");
+//const html5QrCode = new Html5Qrcode("reader", /* verbose= */ true); //To print all logs
 
 function startScanner() {
-  if (!clicked) {
-    clicked = true;
-    //const html5QrCode = new Html5Qrcode("reader", /* verbose= */ true); //To print all logs
-    const html5QrCode = new Html5Qrcode(/* element id */ "reader");
+  if (!scannerClicked) {
+    scannerClicked = true;
+    camClicked = true;
+    scannerBtn.style.cssText +=  "background: linear-gradient(90deg, rgba(255,96,0,.6) 0%, rgba(255,75,110,.6) 49%, rgba(195,9,43,.6) 100%)";
+
     html5QrCode.start(
       { facingMode: "user" }, //cameraId => cameratraseira({ facingMode: "environment" })
       {
@@ -40,6 +44,10 @@ function startScanner() {
       .catch((err) => {
         // Start failed, handle it.
       });
+  } else {
+    html5QrCode.stop();
+    scannerBtn.style.cssText += "background: #EEE";
+    // if(!camClicked) { scannerClicked = false }
   }
 }
 
