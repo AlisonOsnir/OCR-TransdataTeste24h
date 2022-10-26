@@ -11,8 +11,8 @@ function startCam() {
     camClicked = false
     camContainer.style.cssText += "display:none"
     camBtn.style.cssText += "background: #EEE";
-    // if(!scannerClicked) { camClicked = false }
-    // Make stop cam ------------------ only hide for now
+    // Turn off camera
+    video.srcObject.getTracks()[0].stop();
   }
 }
 
@@ -63,7 +63,7 @@ function startup() {
   startbutton = document.getElementById("startbutton");
 
   navigator.mediaDevices
-    .getUserMedia({ video: true, audio: false })
+    .getUserMedia({ video: { facingMode: 'environment' }, audio: false })
     .then((stream) => {
       video.srcObject = stream;
       video.play();
