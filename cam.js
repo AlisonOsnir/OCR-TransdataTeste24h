@@ -3,9 +3,8 @@ const camBtn = document.querySelector(".camBtn")
 let camClicked = false
 
 function startCam() {
-  if (!camClicked){
+  if (!camClicked && !scannerClicked){
     camClicked = true
-    scannerClicked = true
     camBtn.style.cssText += "background:linear-gradient(90deg, rgba(255,96,0,.6) 0%, rgba(255,75,110,.6) 49%, rgba(195,9,43,.6) 100%)";
     startup()
   } else {

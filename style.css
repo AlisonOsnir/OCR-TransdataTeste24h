@@ -47,7 +47,7 @@ header h1 {
 }
 
 .inputSerial, .inputTipos, .inputFalhas {
-  margin: 2rem 0;
+  margin: 1.2rem 0;
 }
 
 .inputFalhas {
@@ -131,27 +131,35 @@ label {
 .exportCSV {
   display: block;
   text-align: center;
+  margin-bottom: 1rem;
 }
 
 .alert-success, .alert-warning {
-  position: relative;
+  position: fixed;
   width: 100%;
   bottom: -100px;
   padding: 20px 10px;
-  color: white;
   transition: 1s ease-in-out;
+  color: white;
+  opacity: 0;
 }
 
 .show-success {
   display: block;
-  bottom: 20px;
   transition:  1s ease-in-out;
   background-color: #60BAAE;
+  opacity: 1;
+  position: fixed; 
+  bottom:0;
+  width:100%; 
 }
 
 .show-warning {
   display: block;
-  bottom: 20px;
   transition:  1s ease-in-out;
   background-color: #ff9800;
+  opacity: 1;
+  position: fixed; 
+  bottom:0;
+  width:100%; 
 }

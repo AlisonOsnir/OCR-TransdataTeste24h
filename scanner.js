@@ -18,9 +18,8 @@ const html5QrCode = new Html5Qrcode(/* element id */ "reader");
 //const html5QrCode = new Html5Qrcode("reader", /* verbose= */ true); //To print all logs
 
 function startScanner() {
-  if (!scannerClicked) {
+  if (!scannerClicked && !camClicked) {
     scannerClicked = true;
-    camClicked = true;
     scannerBtn.style.cssText +=  "background: linear-gradient(90deg, rgba(255,96,0,.6) 0%, rgba(255,75,110,.6) 49%, rgba(195,9,43,.6) 100%)";
 
     html5QrCode.start(
@@ -36,6 +35,7 @@ function startScanner() {
 
         // ...
         html5QrCode.stop();
+        scannerBtn.style.cssText += "background: #EEE";
         // ^ this will stop the scanner (video feed) and clear the scan area.
       },
       (errorMessage) => {
@@ -46,8 +46,8 @@ function startScanner() {
       });
   } else {
     html5QrCode.stop();
+    scannerClicked = false
     scannerBtn.style.cssText += "background: #EEE";
-    // if(!camClicked) { scannerClicked = false }
   }
 }
 

@@ -60,6 +60,8 @@ form.addEventListener("submit", function (event) {
     localStoreData()
 
     resetAlerts()
+    const alertContainer = document.querySelector('.alert')
+    alertContainer.style.cssText += "opacity:1"
     alertSuccessMsg.classList.add('show-success')
     setTimeout(() => { resetAlerts() }, 3000);
     colapseInputFalhas()
@@ -67,6 +69,7 @@ form.addEventListener("submit", function (event) {
     form.reset()
   } else {
     alertWarningMsg.classList.add('show-warning')
+    setTimeout(() => { resetAlerts() }, 3000);
   }
   selectedTipo = null
 })
