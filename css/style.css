@@ -8,6 +8,26 @@
   box-sizing: border-box;
 }
 
+/* .hidden {
+  display: none !important;
+}
+
+#installContainer {
+  position: absolute;
+  bottom: 1em;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+#installContainer button {
+  background-color: inherit;
+  border: 1px solid white;
+  color: white;
+  font-size: 1em;
+  padding: 0.75em;
+} */
+
 header {
   display: block;
   background-color: rgb(77, 20, 118);

@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/AlisonOsnir/TransdataTeste24h/issues"
   },
-  "homepage": "https://github.com/AlisonOsnir/TransdataTeste24h#readme"
+  "homepage": "https://github.com/AlisonOsnir/TransdataTeste24h#readme",
+  "devDependencies": {
+    "workbox-cli": "^6.5.4"
+  }
 }
