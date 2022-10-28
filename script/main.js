@@ -163,8 +163,15 @@ function exportCSV() {
 
 }
 
-const divInstall = document.getElementById('installContainer');
-const btnInstall = document.getElementById('btnInstall');
+function checkCameraPermission() {
+  navigator.permissions.query({ name: 'camera' })
+  .then((permissionObj) => {
+    if(permissionObj.state == "denied") alert('Permission ' + permissionObj.state);
+  })
+  .catch((error) => {
+    console.log('Got error :', error);
+  })
+}
 
 if (window.location.protocol === 'http:') {
   const requireHTTPS = document.getElementById('requireHTTPS');
@@ -172,41 +179,3 @@ if (window.location.protocol === 'http:') {
   link.href = window.location.href.replace('http://', 'https://');
   requireHTTPS.classList.remove('hidden');
 }
-
-// Install PWA
-window.addEventListener('beforeinstallprompt', (event) => {
-  // Impedir que o mini-infobar apareça no celular.
-  event.preventDefault();
-  console.log('👍', 'beforeinstallprompt', event);
-  // Esconder o evento para que possa ser acionado mais tarde.
-  window.deferredPrompt = event;
-  // Remover a classe 'oculta' do contêiner do botão de instalação.
-  divInstall.classList.toggle('hidden', false);
-});
-
-
-btnInstall.addEventListener('click', async () => {
-  console.log('👍', 'btnInstall-clicked');
-  const promptEvent = window.deferredPrompt;
-  if (!promptEvent) {
-    // The deferred prompt isn't available.
-    return;
-  }
-
-  // Show the install prompt.
-  promptEvent.prompt();
-  // Log the result
-  const result = await promptEvent.userChoice;
-  console.log('👍', 'userChoice', result);
-  // Reset the deferred prompt variable, since
-  // prompt() can only be called once.
-  window.deferredPrompt = null;
-  // Hide the install button.
-  divInstall.classList.toggle('hidden', true);
-});
-
-window.addEventListener('appinstalled', (event) => {
-  console.log('👍', 'appinstalled', event);
-  // Limpa o deferredPrompt para que possa ser coletado como lixo
-  window.deferredPrompt = null;
-});
