@@ -1,22 +1,22 @@
-const camContainer = document.querySelector(".contentarea")
-const camBtn = document.querySelector(".camBtn")
-let camClicked = false
+const cameraContainer = document.querySelector(".cameraContainer")
+const cameraBtn = document.querySelector(".cameraBtn")
+let cameraWasClicked = false
 
 function startCam() {
-  if (!camClicked && !scannerClicked){
-    camClicked = true
-    camBtn.style.cssText += "background:linear-gradient(90deg, rgba(255,96,0,.6) 0%, rgba(255,75,110,.6) 49%, rgba(195,9,43,.6) 100%)";
+  if (!cameraWasClicked && !scannerClicked) {
+    cameraWasClicked = true
+    cameraBtn.style.cssText += "background:linear-gradient(90deg, rgba(255,96,0,.6) 0%, rgba(255,75,110,.6) 49%, rgba(195,9,43,.6) 100%)";
     startup()
   } else {
-    camClicked = false
-    camContainer.style.cssText += "display:none"
-    camBtn.style.cssText += "background: #EEE";
     // Turn off camera
     video.srcObject.getTracks()[0].stop();
+    cameraContainer.style.cssText += "display:none"
+    setTimeout(() => {
+      cameraWasClicked = false
+      cameraBtn.style.cssText += "background: #EEE";
+    }, 1000)
   }
 }
-
-// (() => {
 
 // The width and height of the captured photo. We will set the
 // width to the value defined here, but the height will be
@@ -68,14 +68,14 @@ function startup() {
       video.srcObject = stream;
       video.play();
     })
-    // Show HTML div when finish video load
+    // Show HTML div when video start
     .then(() => {
-      camContainer.style.cssText += "display:block"
+      cameraContainer.style.cssText += "display:block"
     })
     .catch((err) => {
       console.error(`An error occurred: ${err}`);
     });
-    
+
   video.addEventListener(
     "canplay",
     (ev) => {
@@ -142,5 +142,3 @@ function takepicture() {
 // Set up our event listener to run the startup process
 // once loading is complete.
 //window.addEventListener("load", startup, false);
-
-// })();

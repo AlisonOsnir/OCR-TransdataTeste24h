@@ -7,43 +7,17 @@
   <title>Registro Teste24h</title>
   <link rel="manifest" href="manifest.json">
 
-  <link rel="stylesheet" href="/css/reset.css">
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="/css/style-cam.css">
+  <link rel="stylesheet" href="./css/reset.css">
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/style-cam.css">
 
-  <script defer src="/script/main.js" type="text/javascript"></script>
-  <script defer src="/script/scanner.js" type="text/javascript"></script>
-  <script defer src="/script/camera.js" type="text/javascript"></script>
+  <script defer src="./script/main.js" type="text/javascript"></script>
+  <script defer src="./script/scanner.js" type="text/javascript"></script>
+  <script defer src="./script/camera.js" type="text/javascript"></script>
   <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 </head>
 
 <body>
-  <!-- Prompt Install PWA -->
-  <h1> Installable PWA </h1>
-  
-  <p id="requireHTTPS" class="hidden">
-    <b>STOP!</b> This page <b>must</b> be served over HTTPS.
-    Please <a>reload this page via HTTPS</a>.
-  </p>
-  
-  <p>
-    Make me installable, follow the 
-    <a href="https://web.dev/codelab-make-installable/">instructions</a> here.
-  </p>
-  
-  <!-- Install button, hidden by default -->
-  <div id="installContainer" class="hidden">
-    <button id="butInstall" type="button">
-      Install
-    </button>
-  </div>
-  
-  <!-- include the Glitch button to show what the webpage is about and
-        to make it easier for folks to view source and remix -->
-  <div class="glitchButton" style="position:fixed;top:20px;right:20px;"></div>
-  <script src="https://button.glitch.me/button.js"></script>
-
-
   <!-- Service worker -->
   <script>
     if ('serviceWorker' in navigator) {
@@ -67,22 +41,48 @@
     integrity="sha384-uONtBTCBzHKF84F6XvyC8S0gL8HTkAPeCyBNvfLfsqHh+Kd6s/kaS4BdmNQ5ktp1"
     crossorigin="anonymous"></script>
 
+  <!-- Prompt Install PWA -->
+  <!-- <h1> Installable PWA </h1>
+  
+  <p id="requireHTTPS" class="hidden">
+    <b>STOP!</b> This page <b>must</b> be served over HTTPS.
+    Please <a>reload this page via HTTPS</a>.
+  </p>
+  
+  <p>
+    Make me installable, follow the 
+    <a href="https://web.dev/codelab-make-installable/">instructions</a> here.
+  </p> -->
+  
+  <!-- Install button, hidden by default -->
+  <!-- <div id="installContainer" class="hidden">
+    <button id="btnInstall" type="button">
+      Install
+    </button>
+  </div>
+   -->
+  <!-- include the Glitch button to show what the webpage is about and
+        to make it easier for folks to view source and remix -->
+  <!-- <div class="glitchButton" style="position:fixed;top:20px;right:20px;"></div>
+  <script src="https://button.glitch.me/button.js"></script> -->
+
+
   <header>
-    <img src="../public/TRDT_logo-RGB_pref-neg-roxo.png" alt="">
+    <img src="./public/TRDT_logo-RGB_pref-neg-roxo.png" alt="">
     <h1>TESTE 24H</h1>
   </header>
 
   <!-- Botoes -->
   <div class="optionBtn">
     <button class="scannerBtn" onclick="startScanner()">Scanner</button>
-    <button class="camBtn" onclick="startCam()">Picture</button>
+    <button class="cameraBtn" onclick="startCam()">Photo</button>
   </div>
 
   <!-- Scanner -->
   <div id="reader" width="600px"></div>
 
   <!-- Camera -->
-  <div class="contentarea">
+  <div class="cameraContainer">
     <div class="camera">
       <video id="video">Video stream not available.</video>
       <button id="startbutton"></button>
@@ -99,8 +99,8 @@
     </div>
 
     <div class="inputTipos">
-      <label>Registrar</label><br>
-      <div class="btTipoContainer">
+      <label>Registrar</label>
+      <div class="btnTipoContainer">
         <input type="button" class="selectTipo" id="selectTeste" value="Teste" onclick="selectTipoTeste()">
         <input type="button" class="selectTipo" id="selectFalha" value="Falha" onclick="selectTipoFalha()">
         <input type="button" class="selectTipo" id="selectAprovado" value="Aprovado" onclick="selectTipoAprovado()">

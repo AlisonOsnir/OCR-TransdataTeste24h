@@ -52,10 +52,11 @@ header h1 {
 .optionBtn {
   display: flex;
   justify-content: space-evenly;
+  margin: 5px 0;
 }
-.scannerBtn, .camBtn {
+.scannerBtn, .cameraBtn {
   width: 70px;
-  height: 30px;
+  height: 35px;
   margin: 5px;
   border: solid 1px;
   border-radius: 3px;
@@ -67,7 +68,7 @@ header h1 {
 }
 
 .inputSerial, .inputTipos, .inputFalhas {
-  margin: 1.2rem 0;
+  margin: 4rem 0;
 }
 
 .inputFalhas {
@@ -79,7 +80,7 @@ header h1 {
 }
 
 .inSerial {
-  width: 72%;
+  width: 60%;
   height: 3rem;
   text-align: center;
   font-size: 26px;
@@ -90,10 +91,10 @@ header h1 {
   border-color: rgb(77, 20, 118);
 }
 
-.btTipoContainer {
+.btnTipoContainer {
   display: flex;
   justify-content: space-evenly;
-  margin: .7rem 0;
+  margin: .7rem 10px;
 }
 
 .selectTipo {
@@ -118,6 +119,7 @@ label {
 .LabelContainer, .inputContainer {
   display: flex;
   justify-content: space-evenly;
+  margin: 0 10px;
 }
 
 .labelCiclo, .inCicloTest, .inCicloPass, .labelFalha, .inFalha {
@@ -140,9 +142,8 @@ label {
   background: linear-gradient(90deg, rgba(255,96,0,1) 0%, rgba(255,75,110,1) 49%, rgba(195,9,43,1) 100%);
   font-size: 18px;
   color: #fff;
-  width: 70%;
+  width: 58%;
   height: 2.5rem;
-  margin-top: 2rem;
   border: solid 1px;
   border-radius: 3px;
   border-color: rgb(77, 20, 118);

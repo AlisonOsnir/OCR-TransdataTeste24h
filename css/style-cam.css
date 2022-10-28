@@ -1,12 +1,11 @@
 #video {
-  border: 1px solid rgb(77, 20, 118);
   width: 320px;
   height: 240px;
 }
 
 #photo {
   position: relative;
-  border: 1px solid #1115;
+  border: 1px solid #333;
   width: 93px;
   height: 70px;
   bottom: 140px;
@@ -30,9 +29,9 @@
   margin-left: auto;
   margin-right: auto;
   bottom: 72px;
-  background-color: #FFF1;
-  border: 1px solid #333;
-  box-shadow: 0px 0px 2px 1px #333;
+  background-color: #EEE1;
+  border: 1px solid #222;
+  box-shadow: inset 0px 0px 6px 1px #222;
   font-size: 14px;
 
   width: 60px;
@@ -40,7 +39,7 @@
   border-radius:50%;
 }
 
-.contentarea {
+.cameraContainer {
   display: none;
   font-size: 16px;
 }

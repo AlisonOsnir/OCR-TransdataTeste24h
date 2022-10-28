@@ -36,13 +36,13 @@ function formatDate(date) {
 }
 class Registro {
   constructor(serial, falha, ciclos, ciclosPass) {
-    this.serial = serial.toUpperCase();
-    this.tipo = selectedTipo.toUpperCase();
-    this.date = formatDate(new Date());
-    this.falha = falha.toUpperCase();
-    this.ciclos = ciclos;
-    this.ciclosPass = ciclosPass;
-    this.percentual = getPercentual(this.ciclos, this.ciclosPass)
+    this.Serial = serial.toUpperCase();
+    this.Tipo = selectedTipo.toUpperCase();
+    this.Date = formatDate(new Date());
+    this.Falha = falha.toUpperCase();
+    this.Ciclos = ciclos;
+    this.CiclosPass = ciclosPass;
+    this.Percentual = getPercentual(this.Ciclos, this.CiclosPass)
   }
 }
 
@@ -164,7 +164,7 @@ function exportCSV() {
 }
 
 const divInstall = document.getElementById('installContainer');
-const butInstall = document.getElementById('butInstall');
+const btnInstall = document.getElementById('btnInstall');
 
 if (window.location.protocol === 'http:') {
   const requireHTTPS = document.getElementById('requireHTTPS');
@@ -174,19 +174,19 @@ if (window.location.protocol === 'http:') {
 }
 
 // Install PWA
-// window.addEventListener('beforeinstallprompt', (event) => {
-//   // Impedir que o mini-infobar apareça no celular.
-//   event.preventDefault();
-//   console.log('👍', 'beforeinstallprompt', event);
-//   // Esconder o evento para que possa ser acionado mais tarde.
-//   window.deferredPrompt = event;
-//   // Remover a classe 'oculta' do contêiner do botão de instalação.
-//   divInstall.classList.toggle('hidden', false);
-// });
+window.addEventListener('beforeinstallprompt', (event) => {
+  // Impedir que o mini-infobar apareça no celular.
+  event.preventDefault();
+  console.log('👍', 'beforeinstallprompt', event);
+  // Esconder o evento para que possa ser acionado mais tarde.
+  window.deferredPrompt = event;
+  // Remover a classe 'oculta' do contêiner do botão de instalação.
+  divInstall.classList.toggle('hidden', false);
+});
 
 
-butInstall.addEventListener('click', async () => {
-  console.log('👍', 'butInstall-clicked');
+btnInstall.addEventListener('click', async () => {
+  console.log('👍', 'btnInstall-clicked');
   const promptEvent = window.deferredPrompt;
   if (!promptEvent) {
     // The deferred prompt isn't available.
