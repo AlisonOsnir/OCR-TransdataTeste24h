@@ -36,8 +36,7 @@ header h1 {
 
 .optionBtn {
   display: flex;
-  justify-content: space-evenly;
-  margin: 5px 0;
+  justify-content: space-around;
 }
 .scannerBtn, .cameraBtn {
   width: 70px;

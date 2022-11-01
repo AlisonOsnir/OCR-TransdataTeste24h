@@ -33,9 +33,9 @@ function startScanner() {
         // Handle on success condition with the decoded text or result.
         console.log(`Scan result: ${decodedText}`, decodedResult);
         inSerial.value = decodedText
-        html5QrCode.stop();
         scannerClicked = false;
         scannerBtn.style.cssText += "background: #EEE";
+        html5QrCode.stop();
         // ^ this will stop the scanner (video feed) and clear the scan area.
       },
       (errorMessage) => {
@@ -46,9 +46,9 @@ function startScanner() {
       });
   } else {
     html5QrCode.stop();
+    scannerBtn.style.cssText += "background: #EEE";
     setTimeout(() => {
       scannerClicked = false
-      scannerBtn.style.cssText += "background: #EEE";
     }, 1000)
   }
 }

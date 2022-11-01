@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="./css/style-cam.css">
 
   <script defer src="./script/main.js" type="text/javascript"></script>
-  <script src="./script\html5-qrcode.min.js" type="text/javascript"></script>
+  <script src="./script/html5-qrcode.min.js" type="text/javascript"></script>
   <script defer src="./script/scanner.js" type="text/javascript"></script>
   <script defer src="./script/camera.js" type="text/javascript"></script>
 </head>
@@ -35,11 +35,6 @@
     }
   </script>
 
-  <!-- PWA -Suporte tela inicial no Safari 12 -->
-  <script async src="https://cdn.jsdelivr.net/npm/pwacompat@2.0.8/pwacompat.min.js"
-    integrity="sha384-uONtBTCBzHKF84F6XvyC8S0gL8HTkAPeCyBNvfLfsqHh+Kd6s/kaS4BdmNQ5ktp1"
-    crossorigin="anonymous"></script>
-
   <header>
     <img src="./public/TRDT_logo-RGB_pref-neg-roxo.png" alt="">
     <h1>TESTE 24H</h1>
@@ -56,11 +51,9 @@
 
   <!-- Camera -->
   <div class="cameraContainer">
-    <div class="camera">
       <video id="video">Video stream not available.</video>
       <button id="startbutton"></button>
       <img id="photo" alt="The screen capture will appear in this box." />
-    </div>
     <canvas id="canvas"> </canvas>
   </div>
 

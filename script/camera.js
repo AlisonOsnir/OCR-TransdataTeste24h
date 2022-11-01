@@ -12,9 +12,9 @@ function startCam() {
     // Turn off camera
     video.srcObject.getTracks()[0].stop();
     cameraContainer.style.cssText += "display:none"
+    cameraBtn.style.cssText += "background: #EEE";
     setTimeout(() => {
       cameraWasClicked = false
-      cameraBtn.style.cssText += "background: #EEE";
     }, 1000)
   }
 }
@@ -23,8 +23,8 @@ function startCam() {
 // width to the value defined here, but the height will be
 // calculated based on the aspect ratio of the input stream.
 
-const width = 320; // We will scale the photo width to this
-let height = 0; // This will be computed based on the input stream
+const width = window.innerWidth; // We will scale the photo width to this
+let height = 0 //width*1.77;     // This will be computed based on the input stream
 
 // |streaming| indicates whether or not we're currently streaming
 // video from the camera. Obviously, we start at false.
@@ -133,7 +133,9 @@ function takepicture() {
 
     const data = canvas.toDataURL("image/png");
     photo.setAttribute("src", data);
+    
     //TESTEEEEEE Salva photo em localStorage
+    photo.style.cssText += "opacity:1"
     localStorage.setItem("imgData", data);
   } else {
     clearphoto();

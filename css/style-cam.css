@@ -1,25 +1,22 @@
-#video {
+/* #video {
   width: 320px;
   height: 240px;
-}
+} */
 
 #photo {
   position: relative;
-  border: 1px solid #333;
   width: 93px;
   height: 70px;
   bottom: 140px;
   left: 5px;
-  opacity: 0.8;
+  opacity: 0;
 }
 
 #canvas {
   display: none;
 }
 
-.camera {
-  width: 320px;
-  height: 240px;
+.videoContainer {
   margin: 0 auto;
 }
 
@@ -42,4 +39,5 @@
 .cameraContainer {
   display: none;
   font-size: 16px;
+  height: 405px; /*Same height as video*/
 }
