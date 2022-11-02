@@ -19,6 +19,7 @@ const html5QrCode = new Html5Qrcode(/* element id */ "reader");
 //const html5QrCode = new Html5Qrcode("reader", /* verbose= */ true); //To print all logs
 
 function startScanner() {
+  checkCameraPermission()
   if (!scannerClicked && !cameraWasClicked) {
     scannerClicked = true;
     scannerBtn.style.cssText += "background: linear-gradient(90deg, rgba(255,96,0,.6) 0%, rgba(255,75,110,.6) 49%, rgba(195,9,43,.6) 100%)";
