@@ -14,7 +14,7 @@ const alertWarningMsg = document.querySelector(".alert-warning")
 
 
 //inSerial.focus()
-
+let cameraAcessGranted = false
 let selectedTipo = null
 
 function padTo2Digits(num) {
@@ -38,7 +38,7 @@ class Registro {
   constructor(serial, falha, ciclos, ciclosPass) {
     this.Serial = serial.toUpperCase();
     this.Tipo = selectedTipo.toUpperCase();
-    this.Date = formatDate(new Date());
+    this.Data = formatDate(new Date());
     this.Falha = falha.toUpperCase();
     this.Ciclos = ciclos;
     this.CiclosPass = ciclosPass;
@@ -57,6 +57,7 @@ function getPercentual(ciclos, ciclosPass) {
 form.addEventListener("submit", function (event) {
   event.preventDefault();
   if (validaSelected()) {
+    postOnspreadsheet()
     localStoreData()
 
     resetAlerts()
@@ -136,6 +137,16 @@ function localStoreData() {
   }
 }
 
+function postOnspreadsheet() {
+  const registro = new Registro(inSerial.value, inFalha.value, inCicloTest.value, inCicloPass.value)
+  console.log({...registro})
+  axios.post('https://sheetdb.io/api/v1/b65qa0zmwl8j4',{
+        "data": {...registro}
+    }).then( response => {
+        console.log(response.data);
+    });
+}
+
 function CSV() {
   const array = JSON.parse(localStorage.getItem("Registro"));
 
@@ -154,19 +165,21 @@ function CSV() {
 }
 
 function exportCSV() {
-  var arr = CSV()
-  var blob = new Blob([arr], { type: "text/csv" });
-  var url = URL.createObjectURL(blob);
-  var a = document.querySelector("#results"); // id of the <a> element to render the download link
-  a.href = url;
-  a.download = "file.csv";
-
+  const arr = CSV()
+  const blob = new Blob([arr], { type: "text/csv" });
+  const url  = window.URL.createObjectURL(blob);
+  window.location.assign(url);
 }
 
 function checkCameraPermission() {
   navigator.permissions.query({ name: 'camera' })
   .then((permissionObj) => {
-    if(permissionObj.state == "denied") alert('Permission ' + permissionObj.state);
+    if(permissionObj.state == "denied") {
+      alert(`Permission ${permissionObj.state}!`);
+    }
+    if(permissionObj.state == "granted") {
+      console.log(`Permission ${permissionObj.state}!`)
+    }
   })
   .catch((error) => {
     console.log('Got error :', error);

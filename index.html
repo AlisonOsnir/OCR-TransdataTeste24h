@@ -15,6 +15,9 @@
   <script src="./script/html5-qrcode.min.js" type="text/javascript"></script>
   <script defer src="./script/scanner.js" type="text/javascript"></script>
   <script defer src="./script/camera.js" type="text/javascript"></script>
+
+  <script defer src="//cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
+
 </head>
 
 <body>
@@ -89,19 +92,22 @@
     <button type="submit" class="btSubmit">Enviar</button><br><br>
   </form>
 
-  <!-- Exportação -->
-  <div class="exportCSV">
-    <button onclick="exportCSV()">Export CSV</button>
-    <a id="results">CSV from local storage</a>
-  </div>
+  <!-- Exportação e link para DB -->
+  <div class="getDatabase">
+    <button class="exportCSV" onclick="exportCSV()">Export CSV</button>
+    <a class="goToSheetDB" 
+    href="https://docs.google.com/spreadsheets/d/1SLInPN2C3Sghr7cqZU2PLUygjhgYeaVc5e9ed7fVxkA/edit#gid=0">
+    Go to sheet  🔗
+  </a>
+</div>
 
   <!-- alertas -->
   <div class="alert">
     <div class="alert-success">
-      <strong>Success!</strong> Novo registro enviado corretamente.
+      <strong>Successo!</strong> Novo registro enviado corretamente.
     </div>
     <div class="alert-warning">
-      <strong>Warning!</strong> Verifique se os campos foram preenchidos.
+      <strong>Aviso!</strong> Verifique se os campos foram preenchidos.
     </div>
   </div>
 </body>

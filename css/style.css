@@ -17,7 +17,7 @@ header {
   display: block;
   background-color: rgb(77, 20, 118);
   color: #fff;
-  height: 4rem;
+  height: 4.2rem;
 }
 
 header img {
@@ -42,6 +42,9 @@ header h1 {
   width: 70px;
   height: 35px;
   margin: 5px;
+  background-color: rgb(77, 20, 118);
+  color: white;
+  padding: 10px 10px;
   border: solid 1px;
   border-radius: 3px;
   border-color: rgb(77, 20, 118);
@@ -65,9 +68,10 @@ header h1 {
 
 .inSerial {
   width: 60%;
-  height: 3rem;
+  height: 4rem;
   text-align: center;
-  font-size: 26px;
+  font-size: 36px;
+  font-weight: 800px;
   margin: .7rem 0;
   text-transform: uppercase;
   border: solid 1px;
@@ -96,7 +100,7 @@ header h1 {
 }
 
 label {
-  font-size: 26px;
+  font-size: 30px;
   font-weight: 600;
 }
 
@@ -124,19 +128,32 @@ label {
 
 .btSubmit {
   background: linear-gradient(90deg, rgba(255,96,0,1) 0%, rgba(255,75,110,1) 49%, rgba(195,9,43,1) 100%);
-  font-size: 18px;
+  font-size: 22px;
   color: #fff;
-  width: 58%;
-  height: 2.5rem;
   border: solid 1px;
   border-radius: 3px;
-  border-color: rgb(77, 20, 118);
+  width: 50%;
+  height: 3rem;
 }
 
-.exportCSV {
-  display: block;
-  text-align: center;
-  margin-bottom: 1rem;
+.getDatabase {
+  display: flex;
+  justify-content: center;
+ 
+}
+
+.exportCSV, .goToSheetDB{
+  font-family: 'Montserrat', sans-serif;
+  height: 36px;
+  background-color: rgb(77, 20, 118);
+  color: white;
+  padding: 10px 10px;
+  text-decoration: none;
+  display: inline-block;
+  margin: 3px 2px 0;
+  border-width: 0;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
 
 .alert-success, .alert-warning {
@@ -147,6 +164,7 @@ label {
   transition: 1s ease-in-out;
   color: white;
   opacity: 0;
+  text-align: center;
 }
 
 .show-success {

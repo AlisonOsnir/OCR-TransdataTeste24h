@@ -12,10 +12,8 @@ function startCam() {
     // Turn off camera
     video.srcObject.getTracks()[0].stop();
     cameraContainer.style.cssText += "display:none"
-    cameraBtn.style.cssText += "background: #EEE";
-    setTimeout(() => {
-      cameraWasClicked = false
-    }, 1000)
+    cameraBtn.style.cssText += "background: rgb(77, 20, 118)";
+    cameraWasClicked = false
   }
 }
 
@@ -142,6 +140,5 @@ function takepicture() {
   }
 }
 
-// Set up our event listener to run the startup process
-// once loading is complete.
+// Set up our event listener to run the startup process once loading is complete.
 //window.addEventListener("load", startup, false);
