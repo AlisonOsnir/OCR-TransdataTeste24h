@@ -128,13 +128,12 @@ function takepicture() {
     canvas.width = width;
     canvas.height = height;
     context.drawImage(video, 0, 0, width, height);
+    initOCR(photo)
 
     const data = canvas.toDataURL("image/png");
     photo.setAttribute("src", data);
     
-    //TESTEEEEEE Salva photo em localStorage
     photo.style.cssText += "opacity:1"
-    localStorage.setItem("imgData", data);
   } else {
     clearphoto();
   }

@@ -50,6 +50,10 @@ header h1 {
   border-color: rgb(77, 20, 118);
 }
 
+.valoresCapturados {
+  column-count: 3
+}
+
 .form {
   text-align: center;
 }

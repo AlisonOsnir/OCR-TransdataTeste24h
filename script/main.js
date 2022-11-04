@@ -185,3 +185,7 @@ function checkCameraPermission() {
     console.log('Got error :', error);
   })
 }
+
+
+//Arrumar alert de sucesso (apenas se api sheetDb respond 200)
+// Se erro criar alert vermelho ( foi salvo no local storage mas não foi envia para planilha)
