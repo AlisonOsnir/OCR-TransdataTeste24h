@@ -15,7 +15,7 @@
 
 header {
   display: block;
-  background-color: rgb(77, 20, 118);
+  background-color: #4d1476;
   color: #fff;
   height: 4.2rem;
 }
@@ -41,17 +41,55 @@ header h1 {
 .scannerBtn, .cameraBtn {
   width: 70px;
   height: 35px;
-  margin: 5px;
-  background-color: rgb(77, 20, 118);
+  margin: 2px;
+  background-color: #4d1476;
   color: white;
-  padding: 10px 10px;
   border: solid 1px;
   border-radius: 3px;
-  border-color: rgb(77, 20, 118);
+  border-color: #4d1476;
 }
 
-.valoresCapturados {
-  column-count: 3
+.containerCapturados {
+  background-color: #EEE;
+  margin: 3px 0;
+  padding: 5px 1px;
+  font-size: 0.8rem;
+  column-count: 3;
+  column-rule: 1px solid #BBB;
+  border-bottom: 1px solid #BBB;
+  width: 412px;
+  height: 300px;
+}
+
+.capturados-aprovado {
+  color: green;
+  margin: 8px 0;
+}
+
+.capturados-reprovado {
+  color: red;
+  margin: 8px 0;
+
+}
+
+.capturados-pendente {
+  color: orange;
+  margin: 8px 0;
+
+}
+
+#myProgress {
+  width: 100%;
+  background-color: #ddd;
+}
+
+#myBar {
+  width: 0%;
+  height: 10px;
+  background: linear-gradient(90deg, rgba(255,96,0,1) 0%, rgba(255,75,110,1) 49%, rgba(195,9,43,1) 100%);
+  text-align: center; /* To center it horizontally (if you want) */
+  line-height: 30px; /* To center it vertically */
+  color: white;
 }
 
 .form {
@@ -80,7 +118,7 @@ header h1 {
   text-transform: uppercase;
   border: solid 1px;
   border-radius: 3px;
-  border-color: rgb(77, 20, 118);
+  border-color: #4d1476;
 }
 
 .btnTipoContainer {
@@ -95,7 +133,7 @@ header h1 {
   height: 3rem;
   border: solid 1px;
   border-radius: 3px;
-  border-color: rgb(77, 20, 118);
+  border-color: #4d1476;
   background-color: #eee;
 }
 
@@ -127,7 +165,7 @@ label {
   text-transform: uppercase;
   border: solid 1px;
   border-radius: 3px;
-  border-color: rgb(77, 20, 118);
+  border-color: #4d1476;
 }
 
 .btSubmit {
@@ -149,12 +187,12 @@ label {
 .exportCSV, .goToSheetDB{
   font-family: 'Montserrat', sans-serif;
   height: 36px;
-  background-color: rgb(77, 20, 118);
+  background-color: #4d1476;
   color: white;
   padding: 10px 10px;
   text-decoration: none;
   display: inline-block;
-  margin: 3px 2px 0;
+  margin: 2px 2px .7rem;
   border-width: 0;
   border-top-right-radius: 10px;
   border-bottom-left-radius: 10px;

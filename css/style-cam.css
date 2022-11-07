@@ -4,12 +4,13 @@
 } */
 
 #photo {
-  position: relative;
+  position: absolute;
   width: 93px;
   height: 70px;
-  bottom: 140px;
-  left: 5px;
+  bottom: 52%;
+  left: 10px;
   opacity: 0;
+  border: 1px solid rgba(255,75,110,0.4);
 }
 
 #canvas {
@@ -22,22 +23,21 @@
 
 #startbutton {
   display: block;
-  position: relative;
+  position: absolute;
   margin-left: auto;
   margin-right: auto;
-  bottom: 72px;
-  background-color: #EEE1;
-  border: 1px solid #222;
+  bottom: 52%;
+  background-color: transparent;
   box-shadow: inset 0px 0px 6px 1px #222;
   font-size: 14px;
-
   width: 60px;
   height: 60px;
-  border-radius:50%;
+  border-radius: 50%;
+  right: 43%;
 }
 
 .cameraContainer {
   display: none;
   font-size: 16px;
-  height: 405px; /*Same height as video*/
+  position: relative;
 }

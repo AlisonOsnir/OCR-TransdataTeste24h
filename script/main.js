@@ -68,6 +68,7 @@ form.addEventListener("submit", function (event) {
     colapseInputFalhas()
     resetSelectColors()
     form.reset()
+    document.getElementById("capturados").innerHTML = ""
   } else {
     alertWarningMsg.classList.add('show-warning')
     setTimeout(() => { resetAlerts() }, 3000);

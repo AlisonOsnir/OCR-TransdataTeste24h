@@ -93,7 +93,7 @@ async function ocrPhoto(imagePath) {
   await worker.loadLanguage('eng');
   await worker.initialize('eng');
   const { data: { text } } = await worker.recognize(imagePath);
-  console.log(text);
+  // console.log(text);
   await worker.terminate();
   return text
 }
@@ -106,22 +106,19 @@ function processData(text) {
 }
 
 function getValues(data) {
-  const valoresCapturadosKeys = Object.keys(valoresCapturados)
+  const CapturadosKeys = Object.keys(valoresCapturados)
+  const CapturadosValues = Object.values(valoresCapturados)
   let re = Object.values(regex)
   let texto = data
-  let contagemErros = 0
   
   for (let i = 0; i < re.length; i++) {
-    const valoresCapturadosValues = Object.values(valoresCapturados)
-    if (valoresCapturadosValues[i] !== null){ 
+    if (CapturadosValues[i] !== null){ 
       continue
     }
-      
-    const inicioParentese = texto.search(re[i])
 
+    const inicioParentese = texto.search(re[i])
     if (inicioParentese != -1) {
       const finalParentese = texto.indexOf(")", inicioParentese)
-
       let valores = texto.substr(inicioParentese, (finalParentese - inicioParentese) + 1)
       valores = valores.slice(1, -1)
       valores = valores.split("/")
@@ -129,34 +126,40 @@ function getValues(data) {
         return parseInt(str);
       });
 
-      let resultado = (valores[1] / valores[0]) * 100
+      let resultado = valores[1] / valores[0]
 
-      if (isNaN(resultado)) {
-        resultado = "0%"
+      if (isNaN(resultado) || resultado > 1 || resultado < 0) {
+        console.error('Resultado invalido!')
+        resultado = null
       } else {
-        resultado = resultado.toFixed() + "%"
+        resultado = resultado.toFixed(3)
       }
-      // console.log({inicioParentese, finalParentese, valores, resultado })
-      // texto = texto.replace(re[i], `\n${resultado} $&`) // apenas add % antes dos ciclos
 
-      // Atribui valores capturado no objeto
-      valoresCapturados[valoresCapturadosKeys[i]] = resultado
-      document.getElementById("demo").innerHTML += (`${resultado} - ${valoresCapturadosKeys[i]}<br>`); //assim pode mostrar novamete na proxima foto
-      console.log(valoresCapturados)
+      console.log(valores, resultado, CapturadosKeys[i])
+      // Atribui valores capturado no objeto 
+      valoresCapturados[CapturadosKeys[i]] = resultado
     } else {
-      //cuidar de erro se match não encontrado
-      contagemErros++
       continue
     }
   }
-  console.log(`Contagem de erros = ${contagemErros}`) //Apenas para teste
-}
 
-
-
-async function initOCR(imagePath) {
+  // FUNÇÃO PARA ITERAR SOBRE O OBJETO E FAZER COMPARAÇÕES - DEVERIA MOSTRAR CAPTURADOS NA PRIMEIRA TENT. E RESETAR A CADA FOTO MOSTRANDO O QUE JA ESTAVA CAPTURADO
+  document.getElementById("capturados").innerHTML = ""
+  for(const [key, value] of Object.entries(valoresCapturados)) {
+    if(value === null) {
+      document.getElementById("capturados").innerHTML += `<pre class="capturados-pendente">PEND. ${key}</pre>`; 
+    } else if (value >= 0.7 ) {
+      document.getElementById("capturados").innerHTML += `<pre class="capturados-aprovado">${value*100}% ${key}</pre>`; 
+    } else  {
+      document.getElementById("capturados").innerHTML += `<pre class="capturados-reprovado">${value*100}% ${key}</pre>`; 
+    }
+  }
+  console.log(valoresCapturados)
+  }
+  
+  async function initOCR(imagePath) {
   let text = await ocrPhoto(imagePath)
   let data = processData(text)
   getValues(data)
-}
+  }
 

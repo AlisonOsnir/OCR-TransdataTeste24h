@@ -128,6 +128,7 @@ function takepicture() {
     canvas.width = width;
     canvas.height = height;
     context.drawImage(video, 0, 0, width, height);
+    startLoadingBar()
     initOCR(photo)
 
     const data = canvas.toDataURL("image/png");
