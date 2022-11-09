@@ -7,10 +7,10 @@
   position: absolute;
   width: 93px;
   height: 70px;
-  bottom: 56%;
+  bottom: 10px;
   left: 10px;
   opacity: 0;
-  border: 1px solid rgba(255,75,110,0.4);
+  border: 1px solid #222;
 }
 
 #canvas {
@@ -26,7 +26,7 @@
   position: absolute;
   margin-left: auto;
   margin-right: auto;
-  bottom: 52%;
+  bottom: 10px;
   background-color: transparent;
   box-shadow: inset 0px 0px 6px 1px #222;
   font-size: 14px;
@@ -40,4 +40,8 @@
   display: none;
   font-size: 16px;
   position: relative;
+}
+
+.ocrProcessContainer {
+  display: none;
 }

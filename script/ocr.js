@@ -43,21 +43,21 @@ const valoresCapturados = {
   'Mifare'        : null,
 }
 
-const regex = {
+const teste = {
   Fita_de_LED   : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Fita\s?de\s?LED/g,      range : 1 },
   Buzzer        : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Buzzer/g,               range : 1 },
   Audio         : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Audio/g,                range : 1 },
   Luminosidade  : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Luminosidade/g,         range : 1 },
   Backlight_LCD : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Backlight\s?(LCD)?/g,   range : 1 },
   Contraste_LCD : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Contraste\s?(LCD)?/g,   range : 1 },
-  RTC           : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?RTC/g,                  range : 1 },
-  Memoria_NPE   : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Memoria\s?NPE/g,        range : 1 },
+  RTC           : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?RTC/g,                  range : 0.95 },
+  Memoria_NPE   : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Memoria\s?NPE/g,        range : 0.95 },
   Ethernet1e2   : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Ethernet\s?1\s?e\s?2/g, range : 1 },
-  Serial232     : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Serial\s?232/g,         range : 1 },
-  Serial485     : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Serial\s?485/g,         range : 1 },
+  Serial232     : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Serial\s?232/g,         range : 0.95 },
+  Serial485     : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Serial\s?485/g,         range : 0.95 },
   PortasUSB     : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Portas\s?USB/g,         range : 1 },
-  Term_Toradex  : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Term.\s?Toradex/g,      range : 1 },
-  Term_PCI_Mãe  : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Term.\s?PCI\s?(Mãe)?/g, range : 1 },
+  Term_Toradex  : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Term.\s?Toradex/g,      range : 0.95 },
+  Term_PCI_Mãe  : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Term.\s?PCI\s?(Mãe)?/g, range : 0.95 },
   Nobreak       : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Nobreak/g,              range : 1 },
   CAN           : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?CAN/g,                  range : 1 },
   PoE           : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?PoE/g,                  range : 1 },
@@ -70,20 +70,20 @@ const regex = {
   IN2           : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?IN2/g,                  range : 1 },
   LEGADO        : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?LEGADO/g,               range : 1 },
   SinaisPOS     : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Sinais\s?POS/g,         range : 1 },
-  SD_Card       : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?SD\s?(Card)?/g,         range : 1 },
-  Nano_Card     : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Nan[o,e]\s?(Card)?/g,   range : 1 },
-  eSIM_Card     : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?eSIM\s?(Card)?/g,       range : 1 },
-  SIM_Card      : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?SIM\s?(Card)?/g,        range : 1 },
-  SAM_Card      : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?SAM\s?(Card)?/g,        range : 1 },
-  Placa_4G      : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?4G/g,                   range : 1 },
-  GPS           : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?GPS/g,                  range : 1 },
-  Acel_GPS      : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Acel.?\s?GPS/g,         range : 1 },
-  Acel_Bosch    : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Acel.?\s?Bosch/g,       range : 1 },
-  WiFi          : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?WiFi/g,                 range : 1 },
-  Bluetooth     : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Bluetooth/g,            range : 1 },
-  EMV           : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?EMV/g,                  range : 1 },
-  QR_Code       : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?QR\s?(Code)?/g,         range : 1 },
-  Mifare        : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Mifare/g,               range : 1 },
+  SD_Card       : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?SD\s?(Card)?/g,         range : .95 },
+  Nano_Card     : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Nan[o,e]\s?(Card)?/g,   range : .95 },
+  eSIM_Card     : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?eSIM\s?(Card)?/g,       range : .95 },
+  SIM_Card      : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?SIM\s?(Card)?/g,        range : .95 },
+  SAM_Card      : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?SAM\s?(Card)?/g,        range : .95 },
+  Placa_4G      : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?4G/g,                   range : .75 },
+  GPS           : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?GPS/g,                  range : .75 },
+  Acel_GPS      : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Acel.?\s?GPS/g,         range : .75 },
+  Acel_Bosch    : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Acel.?\s?Bosch/g,       range : .75 },
+  WiFi          : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?WiFi/g,                 range : .75 },
+  Bluetooth     : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Bluetooth/g,            range : .95 },
+  EMV           : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?EMV/g,                  range : .95 },
+  QR_Code       : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?QR\s?(Code)?/g,         range : .75 },
+  Mifare        : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Mifare/g,               range : .95 },
 }
 
 async function ocrPhoto(imagePath) {
@@ -123,26 +123,30 @@ function getValues(data) {
       continue
     }
 
-    const inicioParentese = texto.search(Object.values(regex)[i]['regExp'])
+    const inicioParentese = texto.search(Object.values(teste)[i]['regExp'])
     if (inicioParentese != -1) {
       const finalParentese = texto.indexOf(")", inicioParentese)
-      let valores = texto.substr(inicioParentese, (finalParentese - inicioParentese) + 1)
-      valores = valores.slice(1, -1)
+      let valoresRaw = texto.substr(inicioParentese, (finalParentese - inicioParentese) + 1)
+      let valores = valoresRaw.slice(1, -1)
       valores = valores.split("/")
       valores = valores.map(function (str) {
         return parseInt(str);
       });
 
-      let resultado = valores[1] / valores[0]
-
-      if (isNaN(resultado) || resultado > 1 || resultado < 0) {
-        console.error('Resultado invalido!')
-        resultado = null
+      let resultado;
+      if(valores[0] > 0) {
+        resultado = valores[1] / valores[0]
       } else {
-        resultado = resultado.toFixed(3)
+        resultado = 0
       }
 
-      console.log(valores, resultado, CapturadosKeys[i])
+      if (isNaN(resultado) || resultado > 1 || resultado < 0) {
+        console.error(`Resultado invalido! -> ${valoresRaw}`)
+        resultado = null
+      } else {
+        resultado = resultado.toFixed(2)
+      }
+
       // Atribui valores capturado no objeto 
       valoresCapturados[CapturadosKeys[i]] = resultado
     } else {
@@ -152,14 +156,16 @@ function getValues(data) {
 
   // FUNÇÃO PARA ITERAR SOBRE O OBJETO E FAZER COMPARAÇÕES - DEVERIA MOSTRAR CAPTURADOS NA PRIMEIRA TENT. E RESETAR A CADA FOTO MOSTRANDO O QUE JA ESTAVA CAPTURADO
   document.getElementById("capturados").innerHTML = ""
-  for(const [key, value, index] of Object.entries(valoresCapturados)) {
+  for(const [key, value] of Object.entries(valoresCapturados)) {
+    let index = 0
     if(value === null) {
       document.getElementById("capturados").innerHTML += `<pre class="capturados-pendente">--- ${key}</pre>`; 
-    } else if (value >= Object.values(regex)[index]['range'] ) {
+    } else if (value >= Object.values(teste)[index]['range'] ) {
       document.getElementById("capturados").innerHTML += `<pre class="capturados-aprovado">${value*100}% ${key}</pre>`; 
     } else  {
       document.getElementById("capturados").innerHTML += `<pre class="capturados-reprovado">${value*100}% ${key}</pre>`; 
     }
+    index++
   }
   console.log(valoresCapturados)
   }

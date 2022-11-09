@@ -1,4 +1,5 @@
 const cameraContainer = document.querySelector(".cameraContainer")
+const ocrProcessContainer = document.querySelector(".ocrProcessContainer")
 const cameraBtn = document.querySelector(".cameraBtn")
 let cameraWasClicked = false
 
@@ -12,6 +13,7 @@ function startCam() {
     // Turn off camera
     video.srcObject.getTracks()[0].stop();
     cameraContainer.style.cssText += "display:none"
+    ocrProcessContainer.style.cssText += "display:none"
     cameraBtn.style.cssText += "background: rgb(77, 20, 118)";
     cameraWasClicked = false
   }
@@ -70,6 +72,8 @@ function startup() {
     // Show HTML div when video start
     .then(() => {
       cameraContainer.style.cssText += "display:block"
+      ocrProcessContainer.style.cssText += "display:block"
+
     })
     .catch((err) => {
       console.error(`An error occurred: ${err}`);
@@ -109,8 +113,7 @@ function startup() {
 
 function clearphoto() {
   const context = canvas.getContext("2d");
-  context.fillStyle = "#FFF5";
-  context.fillRect(0, 0, canvas.width, canvas.height);
+  context.clearRect(0, 0, canvas.width, canvas.height);
 
   const data = canvas.toDataURL("image/png");
   photo.setAttribute("src", data);
@@ -128,17 +131,39 @@ function takepicture() {
     canvas.width = width;
     canvas.height = height;
     context.drawImage(video, 0, 0, width, height);
-    startLoadingBar()
-    initOCR(photo)
 
-    const data = canvas.toDataURL("image/png");
+    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+    let data = imageData.data;
+    thresholdFilter(data, level = 0.45); //0.58 melhorou accuracy no teste.jpg(fundo preto)
+    context.putImageData(imageData, 0, 0);
+
+    data = canvas.toDataURL("image/png");
     photo.setAttribute("src", data);
     
     photo.style.cssText += "opacity:1"
+    startLoadingBar()
+    initOCR(photo)
   } else {
     clearphoto();
   }
 }
 
-// Set up our event listener to run the startup process once loading is complete.
-//window.addEventListener("load", startup, false);
+function thresholdFilter(pixels, level) {
+  if (level === undefined) {
+    level = 0.5;
+  }
+  const thresh = Math.floor(level * 255);
+  for (let i = 0; i < pixels.length; i += 4) {
+    const r = pixels[i];
+    const g = pixels[i + 1];
+    const b = pixels[i + 2];
+    const gray = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+    let val;
+    if (gray >= thresh) {
+      val = 255;
+    } else {
+      val = 0;
+    }
+    pixels[i] = pixels[i + 1] = pixels[i + 2] = val;
+  }
+}
