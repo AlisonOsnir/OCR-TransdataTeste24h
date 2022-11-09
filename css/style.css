@@ -50,31 +50,39 @@ header h1 {
 }
 
 .containerCapturados {
-  background-color: #EEE;
+  background-color: #333;
+  border: 1px solid #333 ;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  padding: 5px;
   margin: 3px 0;
-  padding: 5px 1px;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   column-count: 3;
-  column-rule: 1px solid #BBB;
-  border-bottom: 1px solid #BBB;
-  width: 412px;
-  height: 300px;
+  column-gap: .75em;
+  /* column-rule: 2px solid #666; */
+  font-weight: 600;
 }
 
 .capturados-aprovado {
-  color: green;
-  margin: 8px 0;
+  background-color: rgb(67, 223, 67);
+  padding: 4px 2px;
+  margin: 4px 0;
+  border-radius: 2px;
 }
 
 .capturados-reprovado {
-  color: red;
-  margin: 8px 0;
-
+  background-color: rgb(253, 59, 98);
+  padding: 4px 2px;
+  margin: 4px 0;
+  border-radius: 2px;
 }
 
 .capturados-pendente {
-  color: orange;
-  margin: 8px 0;
+  color: white;
+  padding: 4px 2px;
+  margin: 4px 0;
+  border-radius: 2px;
+  font-style: italic;
 
 }
 
@@ -85,7 +93,7 @@ header h1 {
 
 #myBar {
   width: 0%;
-  height: 10px;
+  height: 12px;
   background: linear-gradient(90deg, rgba(255,96,0,1) 0%, rgba(255,75,110,1) 49%, rgba(195,9,43,1) 100%);
   text-align: center; /* To center it horizontally (if you want) */
   line-height: 30px; /* To center it vertically */
