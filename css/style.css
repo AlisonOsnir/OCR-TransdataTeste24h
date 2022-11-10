@@ -12,6 +12,10 @@
   display: none !important;
 }
 
+.show {
+  display: block !important;
+}
+
 header {
   display: block;
   background-color: #4d1476;

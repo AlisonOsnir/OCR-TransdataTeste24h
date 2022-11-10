@@ -11,8 +11,8 @@ function startCamera() {
     startup();
   } else {
     video.srcObject.getTracks()[0].stop();
-    cameraContainer.classList.add("hidden");
-    ocrProcessContainer.classList.add("hidden");
+    cameraContainer.classList.remove("show");
+    ocrProcessContainer.classList.remove("show");
     cameraBtn.classList.remove("optionBtn-selected");
     cameraWasClicked = false;
   }
@@ -60,8 +60,8 @@ function startup() {
       video.play();
     })
     .then(() => {
-      cameraContainer.classList.remove("hidden");
-      ocrProcessContainer.classList.remove("hidden");
+      cameraContainer.classList.add("show");
+      ocrProcessContainer.classList.add("show");
     })
     .catch((err) => {
       console.error(`An error occurred: ${err}`);
