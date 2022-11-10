@@ -12,7 +12,6 @@
   display: none !important;
 }
 
-
 header {
   display: block;
   background-color: #4d1476;
@@ -47,6 +46,10 @@ header h1 {
   border: solid 1px;
   border-radius: 3px;
   border-color: #4d1476;
+}
+
+.optionBtn-selected {
+  background: linear-gradient(90deg, rgba(255,96,0,.6) 0%, rgba(255,75,110,.6) 49%, rgba(195,9,43,.6) 100%)
 }
 
 .containerCapturados {

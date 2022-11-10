@@ -70,20 +70,20 @@ const teste = {
   IN2           : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?IN2/g,                  range : 1 },
   LEGADO        : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?LEGADO/g,               range : 1 },
   SinaisPOS     : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Sinais\s?POS/g,         range : 1 },
-  SD_Card       : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?SD\s?(Card)?/g,         range : .95 },
-  Nano_Card     : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Nan[o,e]\s?(Card)?/g,   range : .95 },
-  eSIM_Card     : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?eSIM\s?(Card)?/g,       range : .95 },
-  SIM_Card      : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?SIM\s?(Card)?/g,        range : .95 },
-  SAM_Card      : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?SAM\s?(Card)?/g,        range : .95 },
-  Placa_4G      : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?4G/g,                   range : .75 },
-  GPS           : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?GPS/g,                  range : .75 },
-  Acel_GPS      : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Acel.?\s?GPS/g,         range : .75 },
-  Acel_Bosch    : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Acel.?\s?Bosch/g,       range : .75 },
-  WiFi          : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?WiFi/g,                 range : .75 },
-  Bluetooth     : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Bluetooth/g,            range : .95 },
-  EMV           : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?EMV/g,                  range : .95 },
-  QR_Code       : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?QR\s?(Code)?/g,         range : .75 },
-  Mifare        : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Mifare/g,               range : .95 },
+  SD_Card       : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?SD\s?(Card)?/g,         range : 0.95 },
+  Nano_Card     : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Nan[o,e]\s?(Card)?/g,   range : 0.95 },
+  eSIM_Card     : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?eSIM\s?(Card)?/g,       range : 0.95 },
+  SIM_Card      : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?SIM\s?(Card)?/g,        range : 0.95 },
+  SAM_Card      : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?SAM\s?(Card)?/g,        range : 0.95 },
+  Placa_4G      : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?4G/g,                   range : 0.75 },
+  GPS           : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?GPS/g,                  range : 0.75 },
+  Acel_GPS      : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Acel.?\s?GPS/g,         range : 0.75 },
+  Acel_Bosch    : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Acel.?\s?Bosch/g,       range : 0.75 },
+  WiFi          : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?WiFi/g,                 range : 0.75 },
+  Bluetooth     : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Bluetooth/g,            range : 0.95 },
+  EMV           : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?EMV/g,                  range : 0.95 },
+  QR_Code       : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?QR\s?(Code)?/g,         range : 0.75 },
+  Mifare        : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Mifare/g,               range : 0.95 },
 }
 
 async function ocrPhoto(imagePath) {
@@ -91,10 +91,8 @@ async function ocrPhoto(imagePath) {
   const worker = createWorker({
     logger: m => {
       // console.log(m)
-      if (m.status === 'recognizing text'){
+      if (m.status === 'recognizing text')
         ldProgress = m.progress.toFixed(1)*100
-        // console.log(ldProgress)
-      }
     }
   });
   await worker.load();

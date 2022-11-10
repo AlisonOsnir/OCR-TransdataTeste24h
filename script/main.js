@@ -12,8 +12,6 @@ const inCicloPass = document.querySelector(".inCicloPass")
 const alertSuccessMsg = document.querySelector(".alert-success")
 const alertWarningMsg = document.querySelector(".alert-warning")
 
-
-//inSerial.focus()
 let cameraAcessGranted = false
 let selectedTipo = null
 

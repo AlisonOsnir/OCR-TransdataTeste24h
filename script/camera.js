@@ -1,67 +1,57 @@
-const cameraContainer = document.querySelector(".cameraContainer")
-const ocrProcessContainer = document.querySelector(".ocrProcessContainer")
-const cameraBtn = document.querySelector(".cameraBtn")
-let cameraWasClicked = false
+const cameraContainer = document.querySelector(".cameraContainer");
+const ocrProcessContainer = document.querySelector(".ocrProcessContainer");
+const cameraBtn = document.querySelector(".cameraBtn");
+let cameraWasClicked = false;
 
-function startCam() {
-  checkCameraPermission() //Android
+function startCamera() {
+  checkCameraPermission()
   if (!cameraWasClicked && !scannerClicked) {
-    cameraWasClicked = true
-    cameraBtn.style.cssText += "background:linear-gradient(90deg, rgba(255,96,0,.6) 0%, rgba(255,75,110,.6) 49%, rgba(195,9,43,.6) 100%)";
-    startup()
+    cameraWasClicked = true;
+    cameraBtn.classList.add("optionBtn-selected");
+    startup();
   } else {
-    // Turn off camera
     video.srcObject.getTracks()[0].stop();
-    cameraContainer.style.cssText += "display:none"
-    ocrProcessContainer.style.cssText += "display:none"
-    cameraBtn.style.cssText += "background: rgb(77, 20, 118)";
-    cameraWasClicked = false
+    cameraContainer.classList.add("hidden");
+    ocrProcessContainer.classList.add("hidden");
+    cameraBtn.classList.remove("optionBtn-selected");
+    cameraWasClicked = false;
   }
 }
 
-// The width and height of the captured photo. We will set the
-// width to the value defined here, but the height will be
-// calculated based on the aspect ratio of the input stream.
+// The width and height of the captured photo. We will set the width to the value defined here,
+// but the height will be calculated based on the aspect ratio of the input stream.
 
-const width = window.innerWidth; // We will scale the photo width to this
-let height = 0 //width*1.77;     // This will be computed based on the input stream
-
-// |streaming| indicates whether or not we're currently streaming
-// video from the camera. Obviously, we start at false.
+const width = window.innerWidth;
+let height = 0 //width*1.77;
 
 let streaming = false;
-
-// The various HTML elements we need to configure or control. These
-// will be set by the startup() function.
-
 let video = null;
 let canvas = null;
 let photo = null;
-let startbutton = null;
+let takePhoto = null;
 
-function showViewLiveResultButton() {
-  if (window.self !== window.top) {
-    // Ensure that if our document is in a frame, we get the user
-    // to first open it in its own tab or window. Otherwise, it
-    // won't be able to request permission for camera access.
-    document.querySelector(".contentarea").remove();
-    const button = document.createElement("button");
-    button.textContent = "View live result of the example code above";
-    document.body.append(button);
-    button.addEventListener("click", () => window.open(location.href));
-    return true;
-  }
-  return false;
-}
+// function showViewLiveResultButton() {
+//   if (window.self !== window.top) {
+//     // If our document is in a frame, we get the user to first open it in its own tab or window.
+//     // Otherwise, it won't be able to request permission for camera access.
+//     document.querySelector(".contentarea").remove();
+//     const button = document.createElement("button");
+//     button.textContent = "View live result of the example code above";
+//     document.body.append(button);
+//     button.addEventListener("click", () => window.open(location.href));
+//     return true;
+//   }
+//   return false;
+// }
 
 function startup() {
-  if (showViewLiveResultButton()) {
-    return;
-  }
+  // if (showViewLiveResultButton()) {
+  //   return;
+  // }
   video = document.getElementById("video");
   canvas = document.getElementById("canvas");
   photo = document.getElementById("photo");
-  startbutton = document.getElementById("startbutton");
+  takePhoto = document.getElementById("startbutton");
 
   navigator.mediaDevices
     .getUserMedia({ video: { facingMode: 'environment' }, audio: false })
@@ -69,11 +59,9 @@ function startup() {
       video.srcObject = stream;
       video.play();
     })
-    // Show HTML div when video start
     .then(() => {
-      cameraContainer.style.cssText += "display:block"
-      ocrProcessContainer.style.cssText += "display:block"
-
+      cameraContainer.classList.remove("hidden");
+      ocrProcessContainer.classList.remove("hidden");
     })
     .catch((err) => {
       console.error(`An error occurred: ${err}`);
@@ -99,7 +87,7 @@ function startup() {
     false
   );
 
-  startbutton.addEventListener(
+  takePhoto.addEventListener(
     "click",
     (ev) => {
       takepicture();
@@ -107,7 +95,6 @@ function startup() {
     },
     false
   );
-
   clearphoto();
 }
 
@@ -139,7 +126,7 @@ function takepicture() {
 
     data = canvas.toDataURL("image/png");
     photo.setAttribute("src", data);
-    
+
     photo.style.cssText += "opacity:1"
     startLoadingBar()
     initOCR(photo)

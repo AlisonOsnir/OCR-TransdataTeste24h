@@ -1,14 +1,13 @@
-const scannerBtn = document.querySelector(".scannerBtn")
-
+const html5QrCode = new Html5Qrcode("scanner", /* verbose = true*/);
+const scannerBtn = document.querySelector(".scannerBtn");
 let scannerClicked = false;
-const html5QrCode = new Html5Qrcode(/* element id */ "reader");
-//const html5QrCode = new Html5Qrcode("reader", /* verbose= */ true); //To print all logs
 
 function startScanner() {
-  checkCameraPermission()
+  checkCameraPermission();
+
   if (!scannerClicked && !cameraWasClicked) {
     scannerClicked = true;
-    scannerBtn.style.cssText += "background: linear-gradient(90deg, rgba(255,96,0,.6) 0%, rgba(255,75,110,.6) 49%, rgba(195,9,43,.6) 100%)";
+    scannerBtn.classList.add("optionBtn-selected");
 
     html5QrCode.start(
       { facingMode: "user" },
@@ -18,11 +17,10 @@ function startScanner() {
       },
       (decodedText, decodedResult) => {
         // Handle on success .
-        console.log(`Scan result: ${decodedText}`, decodedResult);
-        inSerial.value = decodedText
+        inSerial.value = decodedText;
         html5QrCode.stop();
         scannerClicked = false;
-        scannerBtn.style.cssText += "background: rgb(77, 20, 118)";
+        scannerBtn.classList.remove("optionBtn-selected");
       },
       (errorMessage) => {
         // parse error, ignore it.
@@ -30,9 +28,10 @@ function startScanner() {
       .catch((err) => {
         // Start failed, handle it.
       });
+
   } else {
     html5QrCode.stop();
-    scannerBtn.style.cssText += "background: rgb(77, 20, 118)";
     scannerClicked = false
+    scannerBtn.classList.remove("optionBtn-selected");
   }
 }
