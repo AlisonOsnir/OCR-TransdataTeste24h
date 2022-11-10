@@ -9,13 +9,13 @@
 
   <link rel="stylesheet" href="./css/reset.css">
   <link rel="stylesheet" href="./css/style.css">
-  <link rel="stylesheet" href="./css/style-cam.css">
+  <link rel="stylesheet" href="./css/camera.css">
 
-  <script defer src="./script/html5-qrcode.min.js" type="text/javascript"></script>
   <script defer src='https://unpkg.com/tesseract.js@3.0.3/dist/tesseract.min.js'></script>
   <script defer src="//cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
-
+  
   <script defer src="./script/main.js" type="text/javascript"></script>
+  <script defer src="./script/html5-qrcode.min.js" type="text/javascript"></script>
   <script defer src="./script/scanner.js" type="text/javascript"></script>
   <script defer src="./script/camera.js" type="text/javascript"></script>
   <script defer src="./script/OCR.js"></script>
@@ -56,6 +56,7 @@
     <img id="photo" alt="The screen capture will appear in this box." />
     <canvas id="canvas"> </canvas>
   </div>
+
   <div class="ocrProcessContainer">
     <div id="myProgress">
       <div id="myBar"></div>
@@ -65,9 +66,6 @@
     </div>
   </div>
 
-
-
-  <!-- Formulario -->
   <form class="form">
     <div class="inputSerial">
       <label for="inSerial">Serial Number</label><br>
@@ -95,20 +93,16 @@
         <input type="number" class="inCicloPass" name="inCicloPass" min="0">
       </div>
     </div>
-
     <button type="submit" class="btSubmit">Enviar</button><br><br>
   </form>
 
-  <!-- Exportação e link para DB -->
-  <div class="getDatabase">
-    <button class="exportCSV" onclick="exportCSV()">Export CSV</button>
+  <div class="linksContainer">
     <a class="goToSheetDB"
       href="https://docs.google.com/spreadsheets/d/1SLInPN2C3Sghr7cqZU2PLUygjhgYeaVc5e9ed7fVxkA/edit#gid=0">
       Go to sheet 🔗
     </a>
   </div>
 
-  <!-- alertas -->
   <div class="alert">
     <div class="alert-success">
       <strong>Successo!</strong> Novo registro enviado corretamente.

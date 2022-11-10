@@ -1,19 +1,31 @@
 
 const form = document.querySelector(".form")
 const inSerial = document.querySelector(".inSerial")
-const inputFalhas = document.querySelector(".inputFalhas")
-const selectTipoBtn = document.querySelectorAll(".selectTipo")
 const selectTeste = document.getElementById("selectTeste")
 const selectFalha = document.getElementById("selectFalha")
 const selectAprovado = document.getElementById("selectAprovado")
+const inputFalhas = document.querySelector(".inputFalhas")
 const inFalha = document.querySelector(".inFalha")
 const inCicloTest = document.querySelector(".inCicloTest")
 const inCicloPass = document.querySelector(".inCicloPass")
+const alertContainer = document.querySelector('.alert')
 const alertSuccessMsg = document.querySelector(".alert-success")
 const alertWarningMsg = document.querySelector(".alert-warning")
 
 let cameraAcessGranted = false
 let selectedTipo = null
+
+class Registro {
+  constructor(serial, falha, ciclos, ciclosPass) {
+    this.Serial = serial.toUpperCase();
+    this.Tipo = selectedTipo.toUpperCase();
+    this.Data = formatDate(new Date());
+    this.Falha = falha.toUpperCase();
+    this.Ciclos = ciclos;
+    this.CiclosPass = ciclosPass;
+    this.Percentual = calculatePercentual(this.Ciclos, this.CiclosPass)
+  }
+}
 
 function padTo2Digits(num) {
   return num.toString().padStart(2, '0');
@@ -32,47 +44,15 @@ function formatDate(date) {
     ].join(':')}`
   );
 }
-class Registro {
-  constructor(serial, falha, ciclos, ciclosPass) {
-    this.Serial = serial.toUpperCase();
-    this.Tipo = selectedTipo.toUpperCase();
-    this.Data = formatDate(new Date());
-    this.Falha = falha.toUpperCase();
-    this.Ciclos = ciclos;
-    this.CiclosPass = ciclosPass;
-    this.Percentual = getPercentual(this.Ciclos, this.CiclosPass)
-  }
-}
 
-function getPercentual(ciclos, ciclosPass) {
+
+function calculatePercentual(ciclos, ciclosPass) {
   if (ciclos && ciclosPass) {
     return ((ciclosPass / ciclos) * 100).toFixed(2) + "%"
   } else {
     return ""
   }
 }
-
-form.addEventListener("submit", function (event) {
-  event.preventDefault();
-  if (validaSelected()) {
-    postOnspreadsheet()
-    localStoreData()
-
-    resetAlerts()
-    const alertContainer = document.querySelector('.alert')
-    alertContainer.style.cssText += "opacity:1"
-    alertSuccessMsg.classList.add('show-success')
-    setTimeout(() => { resetAlerts() }, 3000);
-    colapseInputFalhas()
-    resetSelectColors()
-    form.reset()
-    document.getElementById("capturados").innerHTML = ""
-  } else {
-    alertWarningMsg.classList.add('show-warning')
-    setTimeout(() => { resetAlerts() }, 3000);
-  }
-  selectedTipo = null
-})
 
 function validaSelected() {
   if (selectedTipo === "Teste" || selectedTipo === "Aprovado") {
@@ -125,17 +105,6 @@ function selectTipoAprovado() {
   selectedTipo = 'Aprovado'
 }
 
-function localStoreData() {
-  const stored = JSON.parse(localStorage.getItem("Registro"));
-  const registro = new Registro(inSerial.value, inFalha.value, inCicloTest.value, inCicloPass.value)
-  if (stored != null) {
-    stored.push(registro)
-    localStorage.setItem("Registro", JSON.stringify(stored))
-  } else {
-    localStorage.setItem("Registro", JSON.stringify([registro]))
-  }
-}
-
 function postOnspreadsheet() {
   const registro = new Registro(inSerial.value, inFalha.value, inCicloTest.value, inCicloPass.value)
   console.log({...registro})
@@ -144,30 +113,6 @@ function postOnspreadsheet() {
     }).then( response => {
         console.log(response.data);
     });
-}
-
-function CSV() {
-  const array = JSON.parse(localStorage.getItem("Registro"));
-
-  // Use first element to choose the keys and the order
-  var keys = Object.keys(array[0]);
-
-  // Build header
-  var result = keys.join(",") + "\n";
-
-  // Add the rows
-  array.forEach(function (obj) {
-    result += keys.map(k => obj[k]).join(",") + "\n";
-  });
-  console.log(result)
-  return result
-}
-
-function exportCSV() {
-  const arr = CSV()
-  const blob = new Blob([arr], { type: "text/csv" });
-  const url  = window.URL.createObjectURL(blob);
-  window.location.assign(url);
 }
 
 function checkCameraPermission() {
@@ -185,6 +130,26 @@ function checkCameraPermission() {
   })
 }
 
+form.addEventListener("submit", function (event) {
+  event.preventDefault();
+  if (validaSelected()) {
+    postOnspreadsheet()
+    
+    resetAlerts()
+    alertContainer.style.cssText += "opacity:1"
+    alertSuccessMsg.classList.add('show-success')
+    setTimeout(() => { resetAlerts() }, 3000);
+
+    colapseInputFalhas()
+    resetSelectColors()
+    form.reset()
+    document.getElementById("capturados").innerHTML = ""
+  } else {
+    alertWarningMsg.classList.add('show-warning')
+    setTimeout(() => { resetAlerts() }, 3000);
+  }
+  selectedTipo = null
+})
 
 //Arrumar alert de sucesso (apenas se api sheetDb respond 200)
 // Se erro criar alert vermelho ( foi salvo no local storage mas não foi envia para planilha)

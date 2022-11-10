@@ -43,7 +43,7 @@ const valoresCapturados = {
   'Mifare'        : null,
 }
 
-const teste = {
+const testes = {
   Fita_de_LED   : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Fita\s?de\s?LED/g,      range : 1 },
   Buzzer        : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Buzzer/g,               range : 1 },
   Audio         : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Audio/g,                range : 1 },
@@ -92,7 +92,7 @@ async function ocrPhoto(imagePath) {
     logger: m => {
       // console.log(m)
       if (m.status === 'recognizing text')
-        ldProgress = m.progress.toFixed(1)*100
+        ldProgress = m.progress.toFixed(1)*100;
     }
   });
   await worker.load();
@@ -105,92 +105,96 @@ async function ocrPhoto(imagePath) {
 }
 
 function processData(text) {
-  let data = text
-  data = data.replace(/\n/g, '')
+  let data = text;
+  data = data.replace(/\n/g, '');
   return data
 }
 
 function getValues(data) {
-  const CapturadosKeys = Object.keys(valoresCapturados)
-  const CapturadosValues = Object.values(valoresCapturados)
-  // let re = Object.values(regex)
-  const texto = data
-  
-  for (let i = 0; i < CapturadosKeys.length; i++) {
-    if (CapturadosValues[i] !== null){ 
+  const texto = data;
+
+  for (let i = 0; i < Object.keys(valoresCapturados).length; i++) {
+    if (Object.values(valoresCapturados)[i] !== null){ 
       continue
     }
 
-    const inicioParentese = texto.search(Object.values(teste)[i]['regExp'])
-    if (inicioParentese != -1) {
-      const finalParentese = texto.indexOf(")", inicioParentese)
-      let valoresRaw = texto.substr(inicioParentese, (finalParentese - inicioParentese) + 1)
-      let valores = valoresRaw.slice(1, -1)
-      valores = valores.split("/")
+    const inicioParenteses = texto.search(Object.values(testes)[i]['regExp']);
+    if (inicioParenteses != -1) {
+      const finalParenteses = texto.indexOf(")", inicioParenteses);
+      let valoresRaw = texto.substr(inicioParenteses, (finalParenteses - inicioParenteses) + 1);
+      let valores = valoresRaw.slice(1, -1);
+      valores = valores.split("/");
+
       valores = valores.map(function (str) {
-        return parseInt(str);
+        return parseInt(str)
       });
 
-      let resultado;
-      if(valores[0] > 0) {
-        resultado = valores[1] / valores[0]
-      } else {
-        resultado = 0
-      }
-
-      if (isNaN(resultado) || resultado > 1 || resultado < 0) {
-        console.error(`Resultado invalido! -> ${valoresRaw}`)
-        resultado = null
-      } else {
-        resultado = resultado.toFixed(2)
-      }
-
-      // Atribui valores capturado no objeto 
-      valoresCapturados[CapturadosKeys[i]] = resultado
+      let resultado = calculate(valores);
+      valoresCapturados[Object.keys(valoresCapturados)[i]] = resultado;
     } else {
       continue
     }
   }
+}
 
-  // FUNÇÃO PARA ITERAR SOBRE O OBJETO E FAZER COMPARAÇÕES - DEVERIA MOSTRAR CAPTURADOS NA PRIMEIRA TENT. E RESETAR A CADA FOTO MOSTRANDO O QUE JA ESTAVA CAPTURADO
-  document.getElementById("capturados").innerHTML = ""
+function calculate (valores){
+  let resultado;
+  if(valores[0] > 0) {
+    resultado = (valores[1] / valores[0]);
+  } else {
+    resultado = 0;   //Erro???
+  }
+
+  if (isNaN(resultado) || resultado > 1 || resultado < 0) {
+    console.error(`Resultado invalido! -> ${valores[0], valores[1]}`);
+    resultado = null;
+  } else {
+    resultado = resultado.toFixed(2);
+  }
+  return resultado
+}
+
+let loading = 0;
+let ldProgress = 0;
+function startLoadingBar() {
+  if (loading == 0) {
+    loading = 1;
+    const elem = document.getElementById("myBar");
+    let width = 1;
+    const id = setInterval(frame, 100);
+    function frame() {
+      if (width >= 100) {
+        clearInterval(id);
+        loading = 0;
+        ldProgress = 0;
+      } else {
+        width = ldProgress;
+        elem.style.width = width + "%";
+      }
+    }
+  }
+}
+
+//CRIAR DOM FRAGMENT
+function renderValoresCapturados () {
+  document.getElementById("capturados").innerHTML = null;
   for(const [key, value] of Object.entries(valoresCapturados)) {
-    let index = 0
+    let index = 0;
     if(value === null) {
       document.getElementById("capturados").innerHTML += `<pre class="capturados-pendente">--- ${key}</pre>`; 
-    } else if (value >= Object.values(teste)[index]['range'] ) {
+    } else if (value >= Object.values(testes)[index]['range'] ) {
       document.getElementById("capturados").innerHTML += `<pre class="capturados-aprovado">${value*100}% ${key}</pre>`; 
     } else  {
       document.getElementById("capturados").innerHTML += `<pre class="capturados-reprovado">${value*100}% ${key}</pre>`; 
     }
     index++
   }
-  console.log(valoresCapturados)
-  }
-  
-  async function initOCR(imagePath) {
-  let text = await ocrPhoto(imagePath)
-  let data = processData(text)
-  getValues(data)
-  }
+  console.log(valoresCapturados); // Para teste
+}
 
-  let loading = 0;
-  let ldProgress = 0
-  function startLoadingBar() {
-    if (loading == 0) {
-      loading = 1;
-      const elem = document.getElementById("myBar");
-      let width = 1;
-      const id = setInterval(frame, 100);
-      function frame() {
-        if (width >= 100) {
-          clearInterval(id);
-          loading = 0;
-          ldProgress = 0;
-        } else {
-          width = ldProgress;
-          elem.style.width = width + "%";
-        }
-      }
-    }
-  }
+async function initOCR(imagePath) {
+  let text = await ocrPhoto(imagePath);
+  let data = processData(text);
+  getValues(data);
+  renderValoresCapturados();
+}

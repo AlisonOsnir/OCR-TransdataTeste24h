@@ -1,0 +1,44 @@
+.ocrProcessContainer {
+  display: none;
+}
+
+.cameraContainer {
+  display: none;
+  font-size: 16px;
+  position: relative;
+}
+
+/* #video {
+  width: 320px;
+  height: 240px;
+} */
+
+#startbutton {
+  display: block;
+  position: absolute;
+  bottom: 10px;
+  right: 43%;
+  width: 60px;
+  height: 60px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 50%;
+  box-shadow: inset 0px 0px 6px 2px #222;
+  background-color: transparent;
+  font-size: 14px;
+}
+
+#canvas {
+  display: none;
+}
+
+#photo {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  width: 93px;
+  height: 70px;
+  opacity: 0;
+  border: 1px solid #222;
+  border-radius: 3px;
+}

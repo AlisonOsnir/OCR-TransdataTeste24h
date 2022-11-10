@@ -2,12 +2,6 @@
   font-family: 'Montserrat', sans-serif;
 }
 
-* { 
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 .hidden {
   display: none !important;
 }
@@ -43,17 +37,30 @@ header h1 {
 }
 .scannerBtn, .cameraBtn {
   width: 70px;
-  height: 35px;
+  height: 37px;
   margin: 2px;
   background-color: #4d1476;
   color: white;
   border: solid 1px;
   border-radius: 3px;
-  border-color: #4d1476;
 }
 
 .optionBtn-selected {
   background: linear-gradient(90deg, rgba(255,96,0,.6) 0%, rgba(255,75,110,.6) 49%, rgba(195,9,43,.6) 100%)
+}
+
+#myProgress {
+  width: 100%;
+  background-color: #ddd;
+}
+
+#myBar {
+  width: 0%;
+  height: 12px;
+  background: linear-gradient(90deg, rgba(255,96,0,1) 0%, rgba(255,75,110,1) 49%, rgba(195,9,43,1) 100%);
+  text-align: center; /* To center it horizontally (if you want) */
+  line-height: 30px; /* To center it vertically */
+  color: white;
 }
 
 .containerCapturados {
@@ -93,34 +100,8 @@ header h1 {
 
 }
 
-#myProgress {
-  width: 100%;
-  background-color: #ddd;
-}
-
-#myBar {
-  width: 0%;
-  height: 12px;
-  background: linear-gradient(90deg, rgba(255,96,0,1) 0%, rgba(255,75,110,1) 49%, rgba(195,9,43,1) 100%);
-  text-align: center; /* To center it horizontally (if you want) */
-  line-height: 30px; /* To center it vertically */
-  color: white;
-}
-
 .form {
   text-align: center;
-}
-
-.inputSerial, .inputTipos, .inputFalhas {
-  margin: 4rem 0;
-}
-
-.inputFalhas {
-  display: none;
-}
-
-.toggleInputFalhas {
-  display: block;
 }
 
 .inSerial {
@@ -134,6 +115,18 @@ header h1 {
   border: solid 1px;
   border-radius: 3px;
   border-color: #4d1476;
+}
+
+.inputSerial, .inputTipos, .inputFalhas {
+  margin: 4rem 0;
+}
+
+.inputFalhas {
+  display: none;
+}
+
+.toggleInputFalhas {
+  display: block;
 }
 
 .btnTipoContainer {
@@ -167,7 +160,7 @@ label {
   margin: 0 10px;
 }
 
-.labelCiclo, .inCicloTest, .inCicloPass, .labelFalha, .inFalha {
+.labelCiclo, .labelFalha, .inFalha, .inCicloTest, .inCicloPass {
   font-size: 20px;
   width: 30%;
   text-align: center;
@@ -181,6 +174,7 @@ label {
   border: solid 1px;
   border-radius: 3px;
   border-color: #4d1476;
+  box-sizing: border-box;
 }
 
 .btSubmit {
@@ -193,24 +187,23 @@ label {
   height: 3rem;
 }
 
-.getDatabase {
+.linksContainer {
   display: flex;
-  justify-content: center;
- 
+  justify-content: center; 
 }
 
-.exportCSV, .goToSheetDB{
+.goToSheetDB{
   font-family: 'Montserrat', sans-serif;
+  display: inline-block;
+  box-sizing: border-box;
   height: 36px;
   background-color: #4d1476;
   color: white;
   padding: 10px 10px;
-  text-decoration: none;
-  display: inline-block;
-  margin: 2px 2px .7rem;
   border-width: 0;
   border-top-right-radius: 10px;
   border-bottom-left-radius: 10px;
+  text-decoration: none;
 }
 
 .alert-success, .alert-warning {

@@ -16,7 +16,6 @@ function startScanner() {
         qrbox: { width: 250, height: 250 }  // Optional, if you want bounded box UI
       },
       (decodedText, decodedResult) => {
-        // Handle on success .
         inSerial.value = decodedText;
         html5QrCode.stop();
         scannerClicked = false;
