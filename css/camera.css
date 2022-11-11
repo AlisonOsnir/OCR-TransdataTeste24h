@@ -17,7 +17,7 @@
   display: block;
   position: absolute;
   bottom: 10px;
-  right: 43%;
+  right: calc(50% - 30px);
   width: 60px;
   height: 60px;
   margin-left: auto;
