@@ -3,6 +3,19 @@ const ocrProcessContainer = document.querySelector(".ocrProcessContainer");
 const cameraBtn = document.querySelector(".cameraBtn");
 let cameraWasClicked = false;
 
+const switchBtn = document.querySelectorAll(".switchBtn")
+const rangeThresholdDiv = document.querySelector(".threshold")
+const rangeSelector = document.getElementById("binarization")
+const rangeValue = document.getElementById("thresholdValue")
+
+let settings = {
+  blur: false,
+  dilate: false,
+  invertColors: false,
+  thresholdFilter: false,
+  thresholdRange: rangeSelector.value,
+};
+
 // The width and height of the captured photo. We will set the width to the value defined here,
 // but the height will be calculated based on the aspect ratio of the input stream.
 
@@ -97,23 +110,13 @@ function takePicture() {
     canvas.height = height;
     context.drawImage(video, 0, 0, width, height);
 
-    // Pré processamento para OCR -- Need some fixes to work
-    
-    // const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-    // let data = imageData.data;
-
+    // Pré processamento para OCR -- Need some fixes to work --------------------
     preprocessPhoto(canvas, context)
-    
-    // thresholdFilter(data, level = 0.48); //0.58 melhorou accuracy no teste.jpg(fundo preto)
-    // context.putImageData(imageData, 0, 0);
-
-    // data = canvas.toDataURL("image/png");
-    // photo.setAttribute("src", data);
 
     photo.style.cssText += "opacity:1"
-    saveSettings()
-    startLoadingBar()
-    initOCR(photo)
+    // saveSettings()
+    // startLoadingBar()
+    // initOCR(photo)
   } else {
     clearPhoto();
   }
@@ -167,18 +170,7 @@ function startCamera() {
 
 
 
-const switchBtn = document.querySelectorAll(".switchBtn")
-const rangeThresholdDiv = document.querySelector(".threshold")
-const rangeSelector = document.getElementById("binarization")
-const rangeValue = document.getElementById("thresholdValue")
 
-let settings = {
-  blur: false,
-  dilate: false,
-  invertColors: false,
-  thresholdFilter: true,
-  thresholdRange: rangeSelector.value,
-};
 
 storedSettings = JSON.parse(localStorage.getItem('settings'));
 
@@ -219,9 +211,8 @@ rangeSelector.value = settings.thresholdRange
 function preprocessPhoto(canvas, ctx) {
   rangeValue.innerText = rangeSelector.value
 
-  // ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
   const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-  const data = imageData.data;
+  let data = imageData.data;
 
   if (settings) {
     if (settings.blur) { blurARGB(data, canvas, radius = 1) }
