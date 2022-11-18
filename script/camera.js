@@ -97,16 +97,21 @@ function takePicture() {
     canvas.height = height;
     context.drawImage(video, 0, 0, width, height);
 
-    // Pré processamento para OCR
-    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-    let data = imageData.data;
-    thresholdFilter(data, level = 0.48); //0.58 melhorou accuracy no teste.jpg(fundo preto)
-    context.putImageData(imageData, 0, 0);
+    // Pré processamento para OCR -- Need some fixes to work
+    
+    // const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+    // let data = imageData.data;
 
-    data = canvas.toDataURL("image/png");
-    photo.setAttribute("src", data);
+    preprocessPhoto(canvas, context)
+    
+    // thresholdFilter(data, level = 0.48); //0.58 melhorou accuracy no teste.jpg(fundo preto)
+    // context.putImageData(imageData, 0, 0);
+
+    // data = canvas.toDataURL("image/png");
+    // photo.setAttribute("src", data);
 
     photo.style.cssText += "opacity:1"
+    saveSettings()
     startLoadingBar()
     initOCR(photo)
   } else {
@@ -155,4 +160,78 @@ function startCamera() {
     cameraBtn.classList.remove("optionBtn-selected");
     cameraWasClicked = false;
   }
+}
+
+
+
+
+
+
+const switchBtn = document.querySelectorAll(".switchBtn")
+const rangeThresholdDiv = document.querySelector(".threshold")
+const rangeSelector = document.getElementById("binarization")
+const rangeValue = document.getElementById("thresholdValue")
+
+let settings = {
+  blur: false,
+  dilate: false,
+  invertColors: false,
+  thresholdFilter: true,
+  thresholdRange: rangeSelector.value,
+};
+
+storedSettings = JSON.parse(localStorage.getItem('settings'));
+
+if (storedSettings) {
+  settings = storedSettings
+
+  for (let i = 0; i < Object.keys(settings).length - 1; i++) {
+    if (Object.values(settings)[i] === true) {
+      switchBtn[i].checked = true
+    }
+    if (switchBtn[3].checked) {
+      rangeThresholdDiv.classList.toggle("show")
+    }
+  }
+}
+
+for (let i = 0; i < switchBtn.length; i++) {
+  switchBtn[i].addEventListener("change", (evt) => {
+    settings[Object.keys(settings)[i]] = switchBtn[i].checked
+    if (i === 3) {
+      rangeThresholdDiv.classList.toggle("show")
+    }
+    preprocessPhoto(canvas, ctx)
+  })
+}
+
+function saveSettings() {
+  localStorage.setItem('settings', JSON.stringify(settings));
+}
+
+rangeSelector.addEventListener('input', function () {
+  rangeValue.textContent = this.value;
+  settings.thresholdRange = this.value
+});
+
+
+rangeSelector.value = settings.thresholdRange
+function preprocessPhoto(canvas, ctx) {
+  rangeValue.innerText = rangeSelector.value
+
+  // ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  const data = imageData.data;
+
+  if (settings) {
+    if (settings.blur) { blurARGB(data, canvas, radius = 1) }
+    if (settings.dilate) { dilate(data, canvas) }
+    if (settings.invertColors) { invertColors(data) }
+    if (settings.thresholdFilter) { thresholdFilter(data, level = rangeSelector.value); } //0.46 
+  }
+
+  ctx.putImageData(imageData, 0, 0);
+
+  data = canvas.toDataURL("image/png");
+  photo.setAttribute("src", data);
 }

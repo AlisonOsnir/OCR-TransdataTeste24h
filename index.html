@@ -48,9 +48,51 @@
     <button class="cameraBtn" onclick="startCamera()">Photo</button>
   </div>
 
+  <!-- Scanner -->
   <div id="scanner" width="600px"></div>
 
+  
   <div class="cameraContainer">
+    <div class="settingsContainer">
+      <div class="settingOption">
+        <div class="textLabel"> Blur </div>
+        <label class="switch">
+          <input id="blur" class="switchBtn" type="checkbox">
+          <span class="slider round"></span>
+        </label>
+      </div>
+  
+      <div class="settingOption">
+        <div class="textLabel"> Dilate </div>
+        <label class="switch">
+          <input id="dilate" class="switchBtn" type="checkbox">
+          <span class="slider round"></span>
+        </label>
+      </div>
+  
+      <div class="settingOption">
+        <div class="textLabel"> Negative </div>
+        <label class="switch">
+          <input id="invertColors" class="switchBtn" type="checkbox">
+          <span class="slider round"></span>
+        </label>
+      </div>
+  
+      <div class="settingOption">
+        <div class="textLabel"> Binarize </div>
+        <label class="switch">
+          <input id="blur" class="switchBtn" type="checkbox">
+          <span class="slider round"></span>
+        </label>
+      </div>
+    </div>
+    <div class="threshold">
+      Binarize threshold
+      <input type="range" id="binarization" min="0.35" max="0.65" step="0.01" value="0.46"
+        oninput="preprocessPhoto(canvas, ctx)">
+      <span id="thresholdValue"></span>
+    </div>
+
     <video id="video">Video stream not available.</video>
     <button id="startbutton"></button>
     <img id="photo" alt="The screen capture will appear in this box." />
