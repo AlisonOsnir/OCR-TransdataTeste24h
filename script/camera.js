@@ -26,6 +26,8 @@ function startup() {
   const photo = document.getElementById("photo");
   const takePhoto = document.getElementById("startbutton");
 
+  loadSettings()
+
   navigator.mediaDevices
     .getUserMedia({ video: { facingMode: 'environment' }, audio: false })
     .then((stream) => {
@@ -83,8 +85,8 @@ function takePicture() {
     ctx.drawImage(video, 0, 0, width, height);
     photo.style.cssText += "opacity:1"
 
+    saveSettings()
     preprocessPhoto(canvas, ctx)
-    // saveSettings()
     startLoadingBar()
     initOCR(photo)
   } else {
@@ -117,7 +119,6 @@ function startCamera() {
 
 
 
-
 let settings = {
   blur: false,
   dilate: false,
@@ -126,58 +127,56 @@ let settings = {
   thresholdRange: rangeSelector.value,
 };
 
-//SAVE AND LOAD SETTINGS
+function saveSettings() {
+  localStorage.setItem('settings', JSON.stringify(settings));
+}
 
-// function saveSettings() {
-//   localStorage.setItem('settings', JSON.stringify(settings));
-// }
-
-// storedSettings = JSON.parse(localStorage.getItem('settings'));
-
-// if (storedSettings) {
-//   settings = storedSettings
-
-//   for (let i = 0; i < Object.keys(settings).length - 1; i++) {
-//     if (Object.values(settings)[i] === true) {
-//       switchBtn[i].checked = true
-//     }
-//     if (switchBtn[3].checked) {
-//       rangeThresholdDiv.classList.toggle("show")
-//     }
-//   }
-// }
-
+function loadSettings() {
+  storedSettings = JSON.parse(localStorage.getItem('settings'));
+  if (storedSettings) {
+    settings = storedSettings
+    rangeSelector.value = settings.thresholdRange
+    rangeValue.innerText = rangeSelector.value
+  
+    for (let i = 0; i < Object.keys(settings).length - 1; i++) {
+      if (Object.values(settings)[i] === true) {
+        switchBtn[i].checked = true
+      }
+      if (switchBtn[3].checked) {
+        rangeThresholdDiv.classList.add("show")
+      }
+    }
+  }
+}
 
 
+//Comportamento dos switchs na photo atual e visualização da div threshold
 for (let i = 0; i < switchBtn.length; i++) {
   switchBtn[i].addEventListener("input", (evt) => {
     settings[Object.keys(settings)[i]] = switchBtn[i].checked
-    if (i === 3) {
-      rangeThresholdDiv.classList.toggle("show")
+    if (switchBtn[3].checked) {
+      rangeThresholdDiv.classList.add("show")
+    } else {
+      rangeThresholdDiv.classList.remove("show")
     }
+    //deverá usar apenas 1 vez na photo original se houver mudança de estado
     preprocessPhoto(canvas, ctx)
   })
 }
 
-
-
-
-
+//Comportamento do range input threshold
 rangeSelector.addEventListener('input', function () {
   rangeValue.textContent = this.value;
   settings.thresholdRange = this.value
 });
 
-rangeSelector.value = settings.thresholdRange
 
 function preprocessPhoto(canvas, ctx) {
-  rangeValue.innerText = rangeSelector.value
-
   const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
   let data = imageData.data;
 
   if (settings) {
-    if (settings.blur) { blurARGB(data, canvas, radius = 1) }
+    if (settings.blur) { blurARGB(data, canvas, radius = 5) } //1
     if (settings.dilate) { dilate(data, canvas) }
     if (settings.invertColors) { invertColors(data) }
     if (settings.thresholdFilter) { thresholdFilter(data, level = rangeSelector.value); } //0.46 
@@ -188,6 +187,12 @@ function preprocessPhoto(canvas, ctx) {
   data = canvas.toDataURL("image/png");
   photo.setAttribute("src", data);
 }
+
+
+
+
+
+
 
 
 function thresholdFilter(pixels, level) {

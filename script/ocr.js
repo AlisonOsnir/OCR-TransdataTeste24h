@@ -99,7 +99,7 @@ async function ocrPhoto(imagePath) {
   await worker.loadLanguage('eng');
   await worker.initialize('eng');
   const { data: { text } } = await worker.recognize(imagePath);
-  // console.log(text);
+  console.log(text);
   await worker.terminate();
   return text
 }
