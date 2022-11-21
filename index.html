@@ -79,24 +79,23 @@
       </div>
   
       <div class="settingOption">
-        <div class="textLabel"> Binarize </div>
+        <div class="textLabel"> Binary </div>
         <label class="switch">
           <input id="blur" class="switchBtn" type="checkbox">
           <span class="slider round"></span>
         </label>
       </div>
-    </div>
-    <div class="threshold">
-      Binarize threshold
-      <input type="range" id="binarization" min="0.35" max="0.65" step="0.01" value="0.46"
-        oninput="preprocessPhoto(canvas, ctx)">
-      <span id="thresholdValue"></span>
+      <div class="threshold">
+        Threshold
+        <input type="range" id="binarization" min="0.35" max="0.65" step="0.01" value="0.46"
+          oninput="processImage(canvas, ctx)">
+        <span id="thresholdValue"></span>
+      </div>
     </div>
 
     <video id="video">Video stream not available.</video>
+    <canvas id="canvas" onclick="maximizeImage()"></canvas>
     <button id="startbutton"></button>
-    <img id="photo" alt="The screen capture will appear in this box." />
-    <canvas id="canvas"> </canvas>
   </div>
 
   <div class="ocrProcessContainer">

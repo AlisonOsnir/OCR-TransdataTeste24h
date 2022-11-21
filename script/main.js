@@ -153,3 +153,5 @@ form.addEventListener("submit", function (event) {
 
 //Arrumar alert de sucesso (apenas se api sheetDb respond 200)
 // Se erro criar alert vermelho ( foi salvo no local storage mas não foi envia para planilha)
+
+  

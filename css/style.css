@@ -204,6 +204,7 @@ label {
   border-top-right-radius: 10px;
   border-bottom-left-radius: 10px;
   text-decoration: none;
+  margin-bottom: 10px;
 }
 
 .alert-success, .alert-warning {

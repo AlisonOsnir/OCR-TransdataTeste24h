@@ -1,29 +1,44 @@
 const cameraContainer = document.querySelector(".cameraContainer");
-const ocrProcessContainer = document.querySelector(".ocrProcessContainer");
-const cameraBtn = document.querySelector(".cameraBtn");
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
-
-
+const settingsContainer = document.querySelector(".settingsContainer")
 const switchBtn = document.querySelectorAll(".switchBtn")
-const rangeThresholdDiv = document.querySelector(".threshold")
+const rangeContainer = document.querySelector(".threshold")
 const rangeSelector = document.getElementById("binarization")
 const rangeValue = document.getElementById("thresholdValue")
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+const cameraBtn = document.querySelector(".cameraBtn");
+const ocrProcessContainer = document.querySelector(".ocrProcessContainer");
 
 let cameraWasClicked = false;
 
 // The width and height of the captured photo. We will set the width to the value defined here,
 // but the height will be calculated based on the aspect ratio of the input stream.
-
 const width = window.innerWidth;
-let height = 0 //width*1.77;
+let height = 0
 
 let streaming = false;
+let photo = null
 
+
+function startCamera() {
+  checkCameraPermission()
+  if (!cameraWasClicked && !scannerClicked) {
+    cameraWasClicked = true;
+    cameraBtn.classList.add("optionBtn-selected");
+    startup();
+  } else {
+    video.srcObject.getTracks()[0].stop();
+    cameraContainer.classList.remove("show");
+    ocrProcessContainer.classList.remove("show");
+    cameraWasClicked = false;
+    cameraBtn.classList.remove("optionBtn-selected");
+
+    if (isMaximized) maximizeImage()
+  }
+}
 
 function startup() {
   const video = document.getElementById("video");
-  const photo = document.getElementById("photo");
   const takePhoto = document.getElementById("startbutton");
 
   loadSettings()
@@ -37,9 +52,14 @@ function startup() {
     .then(() => {
       cameraContainer.classList.add("show");
       ocrProcessContainer.classList.add("show");
+      drawLastPhoto()
     })
     .catch((err) => {
-      console.error(`An error occurred: ${err}`);
+      console.error("Erro ao iniciar camera:\n" + err);
+      cameraContainer.classList.remove("show");
+      ocrProcessContainer.classList.remove("show");
+      cameraWasClicked = false;
+      cameraBtn.classList.remove("optionBtn-selected");
     });
 
   video.addEventListener(
@@ -49,7 +69,7 @@ function startup() {
         height = video.videoHeight / (video.videoWidth / width);
 
         if (isNaN(height)) {
-          height = width / (4 / 3);
+          height = width / (4 / 3); //aspect ratio
         }
 
         video.setAttribute("width", width);
@@ -70,52 +90,45 @@ function startup() {
     },
     false
   );
-  clearPhoto();
+  clearCanvas();
 }
 
 // Capture a photo by fetching the current contents of the video and drawing it into a canvas,
 // then converting that to a PNG format data URL.
-// By drawing it on an offscreen canvas and then drawing that to the screen,
-// we can change its size and/or apply other changes before drawing it.
+// By drawing it on an canvas we can change its size and/or apply other changes before drawing it.
 
 function takePicture() {
   if (width && height) {
     canvas.width = width;
     canvas.height = height;
     ctx.drawImage(video, 0, 0, width, height);
-    photo.style.cssText += "opacity:1"
+
+    canvas.style.cssText += "opacity: 1; display: block;";
+
+    photo = new Image()
+    photo.src = canvas.toDataURL("photo/png")
+    photoWasTaken = true
 
     saveSettings()
-    preprocessPhoto(canvas, ctx)
+    processImage(canvas, ctx)
     startLoadingBar()
-    initOCR(photo)
+    initOCR(canvas)
   } else {
-    clearPhoto();
+    clearCanvas();
   }
 }
 
-function clearPhoto() {
-  const context = canvas.getContext("2d");
-  context.clearRect(0, 0, canvas.width, canvas.height);
-
-  const data = canvas.toDataURL("image/png");
-  photo.setAttribute("src", data);
-}
-
-function startCamera() {
-  checkCameraPermission()
-  if (!cameraWasClicked && !scannerClicked) {
-    cameraWasClicked = true;
-    cameraBtn.classList.add("optionBtn-selected");
-    startup();
-  } else {
-    video.srcObject.getTracks()[0].stop();
-    cameraContainer.classList.remove("show");
-    ocrProcessContainer.classList.remove("show");
-    cameraBtn.classList.remove("optionBtn-selected");
-    cameraWasClicked = false;
+function drawLastPhoto() {
+  if (photo) {
+    ctx.drawImage(photo, 0, 0, canvas.width, canvas.height)
+    processImage(canvas, ctx)
   }
 }
+
+function clearCanvas() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
 
 
 
@@ -135,64 +148,66 @@ function loadSettings() {
   storedSettings = JSON.parse(localStorage.getItem('settings'));
   if (storedSettings) {
     settings = storedSettings
-    rangeSelector.value = settings.thresholdRange
-    rangeValue.innerText = rangeSelector.value
-  
     for (let i = 0; i < Object.keys(settings).length - 1; i++) {
       if (Object.values(settings)[i] === true) {
         switchBtn[i].checked = true
       }
       if (switchBtn[3].checked) {
-        rangeThresholdDiv.classList.add("show")
+        rangeContainer.classList.add("show")
       }
     }
+    rangeSelector.value = settings.thresholdRange
+    rangeValue.innerText = rangeSelector.value
   }
 }
 
-
-//Comportamento dos switchs na photo atual e visualização da div threshold
-for (let i = 0; i < switchBtn.length; i++) {
-  switchBtn[i].addEventListener("input", (evt) => {
-    settings[Object.keys(settings)[i]] = switchBtn[i].checked
-    if (switchBtn[3].checked) {
-      rangeThresholdDiv.classList.add("show")
-    } else {
-      rangeThresholdDiv.classList.remove("show")
-    }
-    //deverá usar apenas 1 vez na photo original se houver mudança de estado
-    preprocessPhoto(canvas, ctx)
-  })
+let isMaximized = false
+function maximizeImage() {
+  canvas.classList.toggle("maximizedCanvas")
+  startbutton.classList.toggle("hidden")
+  settingsContainer.classList.toggle("showSettingsContainer")
+  isMaximized = isMaximized ? false : true
+  saveSettings()
 }
 
-//Comportamento do range input threshold
+
+// Mostra e set o valor do threshold
 rangeSelector.addEventListener('input', function () {
   rangeValue.textContent = this.value;
   settings.thresholdRange = this.value
 });
 
+//Comportamento dos switchs no canvas e visualização do threshold
+for (let i = 0; i < switchBtn.length; i++) {
+  switchBtn[i].addEventListener("input", (evt) => {
+    settings[Object.keys(settings)[i]] = switchBtn[i].checked;
 
-function preprocessPhoto(canvas, ctx) {
+    if (photo) {
+      processImage(canvas, ctx)
+    }
+
+    if (switchBtn[3].checked) {
+      rangeContainer.classList.add("show")
+    } else {
+      rangeContainer.classList.remove("show")
+    }
+  })
+}
+
+
+function processImage(canvas, ctx) {
+  ctx.drawImage(photo, 0, 0, canvas.width, canvas.height)
   const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
   let data = imageData.data;
 
   if (settings) {
-    if (settings.blur) { blurARGB(data, canvas, radius = 5) } //1
+    if (settings.blur) { blurARGB(data, canvas, radius = 1) }
     if (settings.dilate) { dilate(data, canvas) }
     if (settings.invertColors) { invertColors(data) }
     if (settings.thresholdFilter) { thresholdFilter(data, level = rangeSelector.value); } //0.46 
   }
-
   ctx.putImageData(imageData, 0, 0);
-
-  data = canvas.toDataURL("image/png");
-  photo.setAttribute("src", data);
 }
-
-
-
-
-
-
 
 
 function thresholdFilter(pixels, level) {

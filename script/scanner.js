@@ -25,7 +25,9 @@ function startScanner() {
         // parse error, ignore it.
       })
       .catch((err) => {
-        // Start failed, handle it.
+        console.error("Erro ao iniciar scanner:\n" + err)
+        scannerClicked = false;
+        scannerBtn.classList.remove("optionBtn-selected");
       });
 
   } else {

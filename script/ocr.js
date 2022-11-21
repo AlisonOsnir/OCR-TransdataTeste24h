@@ -93,6 +93,7 @@ async function ocrPhoto(imagePath) {
       // console.log(m)
       if (m.status === 'recognizing text')
         ldProgress = m.progress.toFixed(1)*100;
+        // console.log(ldProgress);
     }
   });
   await worker.load();
@@ -154,23 +155,19 @@ function calculate (valores){
   return resultado
 }
 
-let loading = 0;
+
 let ldProgress = 0;
 function startLoadingBar() {
-  if (loading == 0) {
-    loading = 1;
-    const elem = document.getElementById("myBar");
-    let width = 1;
-    const id = setInterval(frame, 100);
-    function frame() {
-      if (width >= 100) {
-        clearInterval(id);
-        loading = 0;
-        ldProgress = 0;
-      } else {
-        width = ldProgress;
-        elem.style.width = width + "%";
-      }
+  const elem = document.getElementById("myBar");
+  let width = 0;
+  const id = setInterval(frame, 100);
+  function frame() {
+    if (width >= 100) {
+      clearInterval(id);
+      ldProgress = 0;
+    } else {
+      width = ldProgress;
+      elem.style.width = width + "%";
     }
   }
 }
@@ -189,7 +186,6 @@ function renderValoresCapturados () {
     }
     index++
   }
-  console.log(valoresCapturados); // Para teste
 }
 
 async function initOCR(imagePath) {

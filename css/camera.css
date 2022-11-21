@@ -8,10 +8,28 @@
   position: relative;
 }
 
-/* #video {
-  width: 320px;
-  height: 240px;
-} */
+ #video {
+  width: 100vw;
+  height: calc(100vw / 1.333);
+}
+
+#canvas {
+  display: none;
+  position: absolute;
+  bottom: 10px;
+  left: 5px;
+  width: 100px;
+  opacity: 0;
+  border: 1px solid #333;
+  border-radius: 4px;
+}
+
+.maximizedCanvas {
+  bottom: 4px !important;
+  left: -1px !important;
+  width: 100vw !important;
+  border-radius: 0 !important;
+}
 
 #startbutton {
   display: block;
@@ -20,40 +38,30 @@
   transform: translate(50%,-50%);
   position: absolute;
   right: 50%;
-  bottom: -10px;
+  bottom: -20px;
   border-radius: 50%;
   box-shadow: inset 0px 0px 6px 2px #222;
   background-color: transparent;
 }
 
-/* #canvas {
-  display: none;
-} */
-
-#photo {
-  position: absolute;
-  bottom: 10px;
-  left: 10px;
-  width: 93px;
-  height: 70px;
-  opacity: 0;
-  border: 1px solid #222;
-  border-radius: 3px;
-}
 
 
 
 .settingsContainer{
-  display: flex;
+  display: none;
   justify-content: space-between;
   width: 100%;
   background-color: #333;
   color: #fff;
-  padding-bottom: 3px;
+  padding-bottom: 5px;
+}
+
+.showSettingsContainer{
+  display: flex;
 }
 
 .settingOption {
-  width: 25%;
+  width: 50%;
   text-align: center;
 }
 
@@ -65,15 +73,15 @@
 .threshold {
   display: none;
   background-color: #333;
-  font-size: 1.2rem;
-  padding: 10px 0;
+  font-size: 1rem;
+  padding: 5px 0;
   text-align: center;
   color: #fff;
 }
 
-#binarizationValue {
-  display: inline-block;
-  width: 20px;
+#thresholdValue {
+  display: inline;
+  width: 38px;
 }
 
 
