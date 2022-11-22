@@ -16,14 +16,14 @@ let cameraAcessGranted = false
 let selectedTipo = null
 
 class Registro {
-  constructor(serial, falha, ciclos, ciclosPass) {
+  constructor(serial, /*falha, ciclos, ciclosPass*/) {
     this.Serial = serial.toUpperCase();
     this.Tipo = selectedTipo.toUpperCase();
     this.Data = formatDate(new Date());
-    this.Falha = falha.toUpperCase();
-    this.Ciclos = ciclos;
-    this.CiclosPass = ciclosPass;
-    this.Percentual = calculatePercentual(this.Ciclos, this.CiclosPass)
+    // this.Falha = falha.toUpperCase();
+    // this.Ciclos = ciclos;
+    // this.CiclosPass = ciclosPass;
+    // this.Percentual = calculatePercentual(this.Ciclos, this.CiclosPass)
   }
 }
 
@@ -58,19 +58,19 @@ function validaSelected() {
   if (selectedTipo === "Teste" || selectedTipo === "Aprovado") {
     return true
   } else if (selectedTipo === "Falha") {
-    if (inFalha.value && inCicloTest.value && inCicloPass.value) {
+    // if (inFalha.value && inCicloTest.value && inCicloPass.value) {
       return true
-    }
+    // }
   } else {
     return false
   }
 }
 
 function colapseInputFalhas() {
-  inputFalhas.classList.remove("toggleInputFalhas");
-  inFalha.value = ""
-  inCicloTest.value = ""
-  inCicloPass.value = ""
+  // inputFalhas.classList.remove("toggleInputFalhas");
+  // inFalha.value = ""
+  // inCicloTest.value = ""
+  // inCicloPass.value = ""
 }
 
 function resetSelectColors() {
@@ -94,7 +94,7 @@ function selectTipoFalha() {
   inputFalhas.classList.add("toggleInputFalhas");
   resetSelectColors()
   selectFalha.style.cssText += 'background-color:#e94041';
-  inFalha.focus()
+  // inFalha.focus()
   selectedTipo = 'Falha'
 }
 
@@ -106,10 +106,12 @@ function selectTipoAprovado() {
 }
 
 function postOnspreadsheet() {
-  const registro = new Registro(inSerial.value, inFalha.value, inCicloTest.value, inCicloPass.value)
-  console.log({...registro})
+  const registro = new Registro(
+    inSerial.value,// inFalha.value, inCicloTest.value, inCicloPass.value
+    )
+  console.log({...registro, ...valoresCapturados}) // Merging objects
   axios.post('https://sheetdb.io/api/v1/b65qa0zmwl8j4',{
-        "data": {...registro}
+        "data": {...registro, ...valoresCapturados}
     }).then( response => {
         console.log(response.data);
     });

@@ -29,7 +29,7 @@ function startCamera() {
   } else {
     video.srcObject.getTracks()[0].stop();
     cameraContainer.classList.remove("show");
-    ocrProcessContainer.classList.remove("show");
+    // ocrProcessContainer.classList.remove("show");
     cameraWasClicked = false;
     cameraBtn.classList.remove("optionBtn-selected");
 

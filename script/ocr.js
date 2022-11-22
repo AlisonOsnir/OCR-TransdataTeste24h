@@ -136,6 +136,7 @@ function getValues(data) {
       continue
     }
   }
+  // console.log(valoresCapturados)
 }
 
 function calculate (valores){
