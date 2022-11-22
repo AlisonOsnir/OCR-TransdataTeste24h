@@ -87,7 +87,7 @@
       </div>
       <div class="threshold">
         Threshold
-        <input type="range" id="binarization" min="0.35" max="0.65" step="0.01" value="0.46"
+        <input type="range" id="binarization" min="0.4" max="0.6" step="0.01" value="0.46"
           oninput="processImage(canvas, ctx)">
         <span id="thresholdValue"></span>
       </div>
@@ -97,14 +97,14 @@
     <canvas id="canvas" onclick="maximizeImage()"></canvas>
     <button id="startbutton"></button>
   </div>
-
+  
   <div class="ocrProcessContainer">
     <div id="myProgress">
       <div id="myBar"></div>
     </div>
-    <div class="capturadosBtn" style="margin: 2px; display:flex; justify-content:space-around">
-      <button>New Capture</button>
-      <button>Recognize</button><br>
+    <div class="ocrBtnContainer">
+      <button class="ocrBtn" >Reset values</button>
+      <button class="ocrBtn" onclick="initOCR(canvas)">Recognize photo</button>
     </div>
     <div class="containerCapturados">
       <div id="capturados"></div>

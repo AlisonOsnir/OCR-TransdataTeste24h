@@ -1,5 +1,23 @@
 .ocrProcessContainer {
   display: none;
+  position: relative;
+}
+
+.ocrBtnContainer {
+  display:flex; 
+  justify-content:space-between;
+  border-bottom: solid 1px #555;
+  padding: 4px;
+  background-color: #333;
+}
+
+.ocrBtn {
+  display: block;
+  height: 22px;
+  box-sizing: border-box;
+  background-color: #333;
+  color: #0097D1;
+  border: transparent;
 }
 
 .cameraContainer {
@@ -9,25 +27,25 @@
 }
 
  #video {
-  width: 100vw;
-  height: calc(100vw / 1.333);
+  width: 100%;
 }
 
 #canvas {
   display: none;
   position: absolute;
-  bottom: 10px;
-  left: 5px;
+  bottom: 8px;
+  left: 8px;
   width: 100px;
   opacity: 0;
-  border: 1px solid #333;
   border-radius: 4px;
 }
 
 .maximizedCanvas {
-  bottom: 4px !important;
-  left: -1px !important;
-  width: 100vw !important;
+  display: block !important;
+  position: relative !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
   border-radius: 0 !important;
 }
 
@@ -54,6 +72,8 @@
   background-color: #333;
   color: #fff;
   padding-bottom: 5px;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
 }
 
 .showSettingsContainer{
@@ -74,7 +94,7 @@
   display: none;
   background-color: #333;
   font-size: 1rem;
-  padding: 5px 0;
+  padding-top: 4px;
   text-align: center;
   color: #fff;
 }
@@ -127,11 +147,11 @@
 }
 
 input:checked + .slider {
-  background-color: #2196F3;
+  background-color: #0097D1;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
+  box-shadow: 0 0 1px #0097D1;
 }
 
 input:checked + .slider:before {

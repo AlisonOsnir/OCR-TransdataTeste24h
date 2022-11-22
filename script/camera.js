@@ -111,7 +111,6 @@ function takePicture() {
 
     saveSettings()
     processImage(canvas, ctx)
-    startLoadingBar()
     initOCR(canvas)
   } else {
     clearCanvas();
@@ -163,6 +162,7 @@ function loadSettings() {
 
 let isMaximized = false
 function maximizeImage() {
+  video.classList.toggle("hidden")
   canvas.classList.toggle("maximizedCanvas")
   startbutton.classList.toggle("hidden")
   settingsContainer.classList.toggle("showSettingsContainer")

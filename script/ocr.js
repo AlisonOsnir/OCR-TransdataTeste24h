@@ -87,7 +87,7 @@ const testes = {
 }
 
 async function ocrPhoto(imagePath) {
-
+  startLoadingBar()
   const worker = createWorker({
     logger: m => {
       // console.log(m)
