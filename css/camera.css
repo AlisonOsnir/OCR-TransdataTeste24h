@@ -7,7 +7,7 @@
   display:flex; 
   justify-content:space-between;
   border-bottom: solid 1px #555;
-  padding: 4px;
+  padding: 4px 18px;
   background-color: #333;
 }
 
@@ -24,9 +24,11 @@
   display: none;
   font-size: 16px;
   position: relative;
+  height: calc(100% / 1.33333);
+  background-color: #333;
 }
 
- #video {
+#video {
   width: 100%;
 }
 

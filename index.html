@@ -103,8 +103,8 @@
       <div id="myBar"></div>
     </div>
     <div class="ocrBtnContainer">
-      <button class="ocrBtn" >Reset values</button>
-      <button class="ocrBtn" onclick="initOCR(canvas)">Recognize photo</button>
+      <button class="ocrBtn" onclick="resetValoresCapturados()">Reset values</button>
+      <button class="ocrBtn" onclick="initOCR(canvas)">Recognize text</button>
     </div>
     <div class="containerCapturados">
       <div id="capturados"></div>
@@ -154,6 +154,9 @@
     </div>
     <div class="alert-warning">
       <strong>Aviso!</strong> Verifique se os campos foram preenchidos.
+    </div>
+    <div class="alert-fail">
+      <strong>Falha!</strong> Não foi possivel concluir o envio do registro.
     </div>
   </div>
 </body>

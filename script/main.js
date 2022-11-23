@@ -11,6 +11,7 @@ const inCicloPass = document.querySelector(".inCicloPass")
 const alertContainer = document.querySelector('.alert')
 const alertSuccessMsg = document.querySelector(".alert-success")
 const alertWarningMsg = document.querySelector(".alert-warning")
+const alertFailMsg = document.querySelector(".alert-fail")
 
 let cameraAcessGranted = false
 let selectedTipo = null
@@ -55,12 +56,12 @@ function calculatePercentual(ciclos, ciclosPass) {
 }
 
 function validaSelected() {
-  if (selectedTipo === "Teste" || selectedTipo === "Aprovado") {
+  if (selectedTipo /* === "Teste" || selectedTipo === "Aprovado" */) {
     return true
-  } else if (selectedTipo === "Falha") {
-    // if (inFalha.value && inCicloTest.value && inCicloPass.value) {
-      return true
-    // }
+  // } else if (selectedTipo === "Falha") {
+  //   // if (inFalha.value && inCicloTest.value && inCicloPass.value) {
+  //     return true
+  //   // }
   } else {
     return false
   }
@@ -82,6 +83,7 @@ function resetSelectColors() {
 function resetAlerts() {
   alertWarningMsg.classList.remove('show-warning')
   alertSuccessMsg.classList.remove('show-success')
+  alertFailMsg.classList.remove('show-fail')
 }
 
 function selectTipoTeste() {
@@ -114,6 +116,8 @@ function postOnspreadsheet() {
         "data": {...registro, ...valoresCapturados}
     }).then( response => {
         console.log(response.data);
+        const statusCode = response.status;
+        alertMsg(statusCode)
     });
 }
 
@@ -134,15 +138,10 @@ function checkCameraPermission() {
 
 form.addEventListener("submit", function (event) {
   event.preventDefault();
+  console.log(validaSelected())
   if (validaSelected()) {
     postOnspreadsheet()
-    
-    resetAlerts()
-    alertContainer.style.cssText += "opacity:1"
-    alertSuccessMsg.classList.add('show-success')
-    setTimeout(() => { resetAlerts() }, 3000);
-
-    colapseInputFalhas()
+    // colapseInputFalhas()
     resetSelectColors()
     form.reset()
     document.getElementById("capturados").innerHTML = ""
@@ -153,7 +152,16 @@ form.addEventListener("submit", function (event) {
   selectedTipo = null
 })
 
-//Arrumar alert de sucesso (apenas se api sheetDb respond 200)
-// Se erro criar alert vermelho ( foi salvo no local storage mas não foi envia para planilha)
+function alertMsg(status) {
+  status = 404
+  if (status === 201){
+    resetAlerts()
+    // alertContainer.style.cssText += "opacity:1"
+    alertSuccessMsg.classList.add('show-success')
+    setTimeout(() => { resetAlerts() }, 3000);
 
-  
+  } else {
+    alertFailMsg.classList.add('show-fail')
+    setTimeout(() => { resetAlerts() }, 3000);
+  }
+}

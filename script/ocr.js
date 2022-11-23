@@ -144,7 +144,7 @@ function calculate (valores){
   if(valores[0] > 0) {
     resultado = (valores[1] / valores[0]);
   } else {
-    resultado = 0;   //Erro???
+    resultado = null;   // 0?
   }
 
   if (isNaN(resultado) || resultado > 1 || resultado < 0) {
@@ -173,20 +173,27 @@ function startLoadingBar() {
   }
 }
 
-//CRIAR DOM FRAGMENT
+//Elimina InnerHtml usando DOM fragment
 function renderValoresCapturados () {
-  document.getElementById("capturados").innerHTML = null;
+  document.getElementById("capturados").textContent = null;
+  const documentFragment = document.createDocumentFragment();
+
   for(const [key, value] of Object.entries(valoresCapturados)) {
     let index = 0;
+    const prePhrase = document.createElement('pre');
     if(value === null) {
-      document.getElementById("capturados").innerHTML += `<pre class="capturados-pendente">--- ${key}</pre>`; 
-    } else if (value >= Object.values(testes)[index]['range'] ) {
-      document.getElementById("capturados").innerHTML += `<pre class="capturados-aprovado">${value*100}% ${key}</pre>`; 
+      prePhrase.setAttribute('class',"capturados-pendente")
+      prePhrase.textContent = `--- ${key}`;
     } else  {
-      document.getElementById("capturados").innerHTML += `<pre class="capturados-reprovado">${value*100}% ${key}</pre>`; 
+      (value >= Object.values(testes)[index]['range']) ? 
+      prePhrase.setAttribute('class','capturados-aprovado') : 
+      prePhrase.setAttribute('class','capturados-reprovado');
+      prePhrase.textContent = `${value*100}% ${key}`;
     }
     index++
+    documentFragment.append(prePhrase)
   }
+  document.getElementById("capturados").append(documentFragment)
 }
 
 async function initOCR(imagePath) {
@@ -194,4 +201,11 @@ async function initOCR(imagePath) {
   let data = processData(text);
   getValues(data);
   renderValoresCapturados();
+}
+
+function resetValoresCapturados () {
+  for (valor in valoresCapturados) {
+    valoresCapturados[valor] = null
+  }
+  renderValoresCapturados ()
 }

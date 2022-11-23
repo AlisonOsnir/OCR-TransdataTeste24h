@@ -56,7 +56,7 @@ header h1 {
 
 #myBar {
   width: 0%;
-  height: 4px;
+  height: 5px;
   background-color:#0097D1
 }
 
@@ -101,14 +101,14 @@ header h1 {
 
 .inSerial {
   width: 60%;
-  height: 4rem;
+  height: 3.7rem;
   text-align: center;
-  font-size: 36px;
+  font-size: 30px;
   font-weight: 800px;
   margin: .7rem 0;
   text-transform: uppercase;
   border: solid 1px;
-  border-radius: 3px;
+  border-radius: 5px;
 }
 
 .inputSerial, .inputTipos, .inputFalhas {
@@ -200,7 +200,7 @@ label {
   margin-bottom: 10px;
 }
 
-.alert-success, .alert-warning {
+.alert-success, .alert-warning, .alert-fail {
   position: fixed;
   width: 100%;
   bottom: -100px;
@@ -208,7 +208,6 @@ label {
   transition: 1s ease-in-out;
   color: white;
   opacity: 0;
-  text-align: center;
 }
 
 .show-success {
@@ -225,6 +224,16 @@ label {
   display: block;
   transition:  1s ease-in-out;
   background-color: #ff9800;
+  opacity: 1;
+  position: fixed; 
+  bottom:0;
+  width:100%; 
+}
+
+.show-fail {
+  display: block;
+  transition:  1s ease-in-out;
+  background-color: #ff0000;
   opacity: 1;
   position: fixed; 
   bottom:0;
