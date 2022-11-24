@@ -79,24 +79,21 @@ header h1 {
 }
 
 .capturados-aprovado {
-  background-color: rgb(67, 223, 67);
+  color: rgb(67, 223, 67);
   padding: 4px 2px;
   margin: 4px 0;
-  border-radius: 2px;
 }
 
 .capturados-reprovado {
-  background-color: rgb(253, 59, 98);
+  color: rgb(253, 59, 98);
   padding: 4px 2px;
   margin: 4px 0;
-  border-radius: 2px;
 }
 
 .capturados-pendente {
   color: white;
   padding: 4px 2px;
   margin: 4px 0;
-  border-radius: 2px;
 }
 
 .form {
