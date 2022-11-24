@@ -55,6 +55,7 @@ function calculatePercentual(ciclos, ciclosPass) {
   }
 }
 
+//Usar ternario
 function validaSelected() {
   if (selectedTipo /* === "Teste" || selectedTipo === "Aprovado" */) {
     return true
@@ -115,7 +116,8 @@ function postOnspreadsheet() {
   axios.post('https://sheetdb.io/api/v1/b65qa0zmwl8j4',{
         "data": {...registro, ...valoresCapturados}
     }).then( response => {
-        console.log(response.data);
+        // console.log('SheetDB:', response.data);
+        // console.log('Status code:', response.status);
         const statusCode = response.status;
         alertMsg(statusCode)
     });
@@ -153,7 +155,6 @@ form.addEventListener("submit", function (event) {
 })
 
 function alertMsg(status) {
-  status = 404
   if (status === 201){
     resetAlerts()
     // alertContainer.style.cssText += "opacity:1"

@@ -143,12 +143,14 @@ function calculate (valores){
   let resultado;
   if(valores[0] > 0) {
     resultado = (valores[1] / valores[0]);
+  } else if (valores[0] == 0 || valores[1 == 0]) {
+    resultado = 0;
   } else {
-    resultado = null;   // 0?
+    resultado = null; 
   }
 
   if (isNaN(resultado) || resultado > 1 || resultado < 0) {
-    console.error(`Resultado invalido! -> ${valores[0], valores[1]}`);
+    console.error(`Resultado invalido! -> ${valores[0]} / ${valores[1]}`);
     resultado = null;
   } else {
     resultado = resultado.toFixed(2);
@@ -186,8 +188,8 @@ function renderValoresCapturados () {
       prePhrase.textContent = `--- ${key}`;
     } else  {
       (value >= Object.values(testes)[index]['range']) ? 
-      prePhrase.setAttribute('class','capturados-aprovado') : 
-      prePhrase.setAttribute('class','capturados-reprovado');
+        prePhrase.setAttribute('class','capturados-aprovado') : 
+        prePhrase.setAttribute('class','capturados-reprovado');
       prePhrase.textContent = `${value*100}% ${key}`;
     }
     index++

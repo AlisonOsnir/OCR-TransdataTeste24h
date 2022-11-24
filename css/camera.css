@@ -16,7 +16,7 @@
   height: 22px;
   box-sizing: border-box;
   background-color: #333;
-  color: #0097D1;
+  color: var(--controlsColor);
   border: transparent;
 }
 
@@ -30,6 +30,7 @@
 
 #video {
   width: 100%;
+  height: calc(100% / var(--aspectRatio));
 }
 
 #canvas {
@@ -48,6 +49,7 @@
   bottom: 0 !important;
   left: 0 !important;
   width: 100% !important;
+  height: calc(100% / var(--aspectRatio));
   border-radius: 0 !important;
 }
 
@@ -149,11 +151,11 @@
 }
 
 input:checked + .slider {
-  background-color: #0097D1;
+  background-color: var(--controlsColor);
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #0097D1;
+  box-shadow: 0 0 1px var(--controlsColor);
 }
 
 input:checked + .slider:before {
