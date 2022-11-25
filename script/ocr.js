@@ -143,7 +143,7 @@ function calculate (valores){
   let resultado;
   if(valores[0] > 0) {
     resultado = (valores[1] / valores[0]);
-  } else if (valores[0] == 0 || valores[1 == 0]) {
+  } else if (valores[0] == 0 || valores[1] == 0) {
     resultado = 0;
   } else {
     resultado = null; 
