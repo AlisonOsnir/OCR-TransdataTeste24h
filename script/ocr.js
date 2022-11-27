@@ -1,48 +1,5 @@
 const { createWorker, createScheduler } = Tesseract;
 
-const valoresCapturados = {
-  'Fita de LED'   : null,
-  'Buzzer'        : null,
-  'Audio'         : null,
-  'Luminosidade'  : null,
-  'Backlight LCD' : null,
-  'Contraste LCD' : null,
-  'RTC'           : null,
-  'Memoria NPE'   : null,
-  'Ethernet 1e2'  : null,
-  'Serial 232'    : null,
-  'Serial 485'    : null,
-  'Portas USB'    : null,
-  'Term.Toradex'  : null,
-  'Term.PCI Mae'  : null,
-  'Nobreak'       : null,
-  'CAN'           : null,
-  'PoE'           : null,
-  '24V ETH1'      : null,
-  '24V ETH2'      : null,
-  'ATIVASOL'      : null,
-  'COM_COB'       : null,
-  'COM_MOT'       : null,
-  'IN1'           : null,
-  'IN2'           : null,
-  'LEGADO'        : null,
-  'Sinais POS'    : null,
-  'SD Card'       : null,
-  'Nano Card'     : null,
-  'eSIM Card'     : null,
-  'SIM Card'      : null,
-  'SAM Card'      : null,
-  '4G'            : null,
-  'GPS'           : null,
-  'Acel. GPS'     : null,
-  'Acel. Bosch'   : null,
-  'WiFi'          : null,
-  'Bluetooth'     : null,
-  'EMV'           : null,
-  'QR Code'       : null,
-  'Mifare'        : null,
-}
-
 const testes = {
   Fita_de_LED   : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Fita\s?de\s?LED/g,      range : 1 },
   Buzzer        : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Buzzer/g,               range : 1 },
@@ -86,16 +43,60 @@ const testes = {
   Mifare        : { regExp : /[\({]\d{1,3}?\/\d{1,3}?[}\)]\s?Mifare/g,               range : 0.95 },
 }
 
+const valoresCapturados = {
+  'Fita de LED'   : null,
+  'Buzzer'        : null,
+  'Audio'         : null,
+  'Luminosidade'  : null,
+  'Backlight LCD' : null,
+  'Contraste LCD' : null,
+  'RTC'           : null,
+  'Memoria NPE'   : null,
+  'Ethernet 1e2'  : null,
+  'Serial 232'    : null,
+  'Serial 485'    : null,
+  'Portas USB'    : null,
+  'Term.Toradex'  : null,
+  'Term.PCI Mae'  : null,
+  'Nobreak'       : null,
+  'CAN'           : null,
+  'PoE'           : null,
+  '24V ETH1'      : null,
+  '24V ETH2'      : null,
+  'ATIVASOL'      : null,
+  'COM_COB'       : null,
+  'COM_MOT'       : null,
+  'IN1'           : null,
+  'IN2'           : null,
+  'LEGADO'        : null,
+  'Sinais POS'    : null,
+  'SD Card'       : null,
+  'Nano Card'     : null,
+  'eSIM Card'     : null,
+  'SIM Card'      : null,
+  'SAM Card'      : null,
+  '4G'            : null,
+  'GPS'           : null,
+  'Acel. GPS'     : null,
+  'Acel. Bosch'   : null,
+  'WiFi'          : null,
+  'Bluetooth'     : null,
+  'EMV'           : null,
+  'QR Code'       : null,
+  'Mifare'        : null,
+}
+
 async function ocrPhoto(imagePath) {
   startLoadingBar()
+
   const worker = createWorker({
     logger: m => {
-      // console.log(m)
-      if (m.status === 'recognizing text')
+      if (m.status === 'recognizing text') {
         ldProgress = m.progress.toFixed(1)*100;
-        // console.log(ldProgress);
+      }
     }
   });
+
   await worker.load();
   await worker.loadLanguage('eng');
   await worker.initialize('eng');
@@ -136,7 +137,6 @@ function getValues(data) {
       continue
     }
   }
-  // console.log(valoresCapturados)
 }
 
 function calculate (valores){
@@ -161,7 +161,7 @@ function calculate (valores){
 
 let ldProgress = 0;
 function startLoadingBar() {
-  const elem = document.getElementById("myBar");
+  const elem = document.getElementById("barProgress");
   let width = 0;
   const id = setInterval(frame, 100);
   function frame() {

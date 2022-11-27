@@ -13,7 +13,7 @@
 
   <script defer src='https://unpkg.com/tesseract.js@3.0.3/dist/tesseract.min.js'></script>
   <script defer src="//cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
-  
+
   <script defer src="./script/main.js" type="text/javascript"></script>
   <script defer src="./script/html5-qrcode.min.js" type="text/javascript"></script>
   <script defer src="./script/scanner.js" type="text/javascript"></script>
@@ -48,10 +48,8 @@
     <button class="cameraBtn" onclick="startCamera()">Photo</button>
   </div>
 
-  <!-- Scanner -->
   <div id="scanner" width="600px"></div>
 
-  
   <div class="cameraContainer">
     <div class="settingsContainer">
       <div class="settingOption">
@@ -61,15 +59,15 @@
           <span class="slider round"></span>
         </label>
       </div>
-  
+
       <div class="settingOption">
-        <div class="textLabel"> Dilate </div>
+        <div class="textLabel"> Grayscale </div>
         <label class="switch">
           <input id="dilate" class="switchBtn" type="checkbox">
           <span class="slider round"></span>
         </label>
       </div>
-  
+
       <div class="settingOption">
         <div class="textLabel"> Negative </div>
         <label class="switch">
@@ -77,7 +75,7 @@
           <span class="slider round"></span>
         </label>
       </div>
-  
+
       <div class="settingOption">
         <div class="textLabel"> Binary </div>
         <label class="switch">
@@ -85,22 +83,16 @@
           <span class="slider round"></span>
         </label>
       </div>
-      <div class="threshold">
-        Threshold
-        <input type="range" id="binarization" min="0.4" max="0.6" step="0.01" value="0.46"
-          oninput="processImage(canvas, ctx)">
-        <span id="thresholdValue"></span>
-      </div>
     </div>
 
     <video id="video">Video stream not available.</video>
     <canvas id="canvas" onclick="maximizeImage()"></canvas>
-    <button id="startbutton"></button>
+    <button id="takePhoto"></button>
   </div>
-  
+
   <div class="ocrProcessContainer">
-    <div id="myProgress">
-      <div id="myBar"></div>
+    <div id="barBG">
+      <div id="barProgress"></div>
     </div>
     <div class="ocrBtnContainer">
       <button class="ocrBtn" onclick="resetValoresCapturados()">Reset values</button>

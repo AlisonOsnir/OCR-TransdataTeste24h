@@ -53,12 +53,12 @@ header h1 {
   background: var(--orangeGradient)
 }
 
-#myProgress {
+#barBG {
   width: 100%;
   background-color: #B2A7B8;
 }
 
-#myBar {
+#barProgress {
   width: 0%;
   height: 5px;
   background-color: var(--controlsColor)
@@ -154,6 +154,8 @@ label {
   margin: 0 10px;
 }
 
+
+/* If div inputFalhas is being used */
 .labelCiclo, .labelFalha, .inFalha, .inCicloTest, .inCicloPass {
   font-size: 20px;
   width: 30%;
@@ -161,7 +163,6 @@ label {
   padding: 6px 1px;
   vertical-align: middle;
 }
-
 .inFalha, .inCicloTest, .inCicloPass{
   height: 3rem;
   text-transform: uppercase;
@@ -170,6 +171,7 @@ label {
   border-color: var(--purpleTransdata);
   box-sizing: border-box;
 }
+
 
 .btSubmit {
   background: var(--orangeGradient);

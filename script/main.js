@@ -4,10 +4,12 @@ const inSerial = document.querySelector(".inSerial")
 const selectTeste = document.getElementById("selectTeste")
 const selectFalha = document.getElementById("selectFalha")
 const selectAprovado = document.getElementById("selectAprovado")
+
 const inputFalhas = document.querySelector(".inputFalhas")
 const inFalha = document.querySelector(".inFalha")
 const inCicloTest = document.querySelector(".inCicloTest")
 const inCicloPass = document.querySelector(".inCicloPass")
+
 const alertContainer = document.querySelector('.alert')
 const alertSuccessMsg = document.querySelector(".alert-success")
 const alertWarningMsg = document.querySelector(".alert-warning")
@@ -116,7 +118,7 @@ function postOnspreadsheet() {
   axios.post('https://sheetdb.io/api/v1/b65qa0zmwl8j4',{
         "data": {...registro, ...valoresCapturados}
     }).then( response => {
-        // console.log('SheetDB:', response.data);
+        console.log('SheetDB:', response.data);
         // console.log('Status code:', response.status);
         const statusCode = response.status;
         alertMsg(statusCode)
@@ -157,7 +159,6 @@ form.addEventListener("submit", function (event) {
 function alertMsg(status) {
   if (status === 201){
     resetAlerts()
-    // alertContainer.style.cssText += "opacity:1"
     alertSuccessMsg.classList.add('show-success')
     setTimeout(() => { resetAlerts() }, 3000);
 

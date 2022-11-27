@@ -1,24 +1,28 @@
+const cameraBtn = document.querySelector(".cameraBtn");
 const cameraContainer = document.querySelector(".cameraContainer");
 const settingsContainer = document.querySelector(".settingsContainer")
 const switchBtn = document.querySelectorAll(".switchBtn")
-const rangeContainer = document.querySelector(".threshold")
-const rangeSelector = document.getElementById("binarization")
-const rangeValue = document.getElementById("thresholdValue")
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
-const cameraBtn = document.querySelector(".cameraBtn");
 const ocrProcessContainer = document.querySelector(".ocrProcessContainer");
 
 let cameraWasClicked = false;
 
+let settings = {
+  blur: false,
+  grayscale: false,
+  negative: false,
+  binarize: false,
+};
+
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
 // The width and height of the captured photo. We will set the width to the value defined here,
 // but the height will be calculated based on the aspect ratio of the input stream.
-const width = window.innerWidth;
+const width = window.innerWidth; //320
 let height = 0
 
 let streaming = false;
 let photo = null
-
 
 function startCamera() {
   checkCameraPermission()
@@ -39,7 +43,7 @@ function startCamera() {
 
 function startup() {
   const video = document.getElementById("video");
-  const takePhoto = document.getElementById("startbutton");
+  const takePhoto = document.getElementById("takePhoto");
 
   loadSettings()
 
@@ -93,10 +97,6 @@ function startup() {
   clearCanvas();
 }
 
-// Capture a photo by fetching the current contents of the video and drawing it into a canvas,
-// then converting that to a PNG format data URL.
-// By drawing it on an canvas we can change its size and/or apply other changes before drawing it.
-
 function takePicture() {
   if (width && height) {
     canvas.width = width;
@@ -129,16 +129,6 @@ function clearCanvas() {
 }
 
 
-
-
-let settings = {
-  blur: false,
-  dilate: false,
-  invertColors: false,
-  thresholdFilter: false,
-  thresholdRange: rangeSelector.value,
-};
-
 function saveSettings() {
   localStorage.setItem('settings', JSON.stringify(settings));
 }
@@ -147,49 +137,31 @@ function loadSettings() {
   storedSettings = JSON.parse(localStorage.getItem('settings'));
   if (storedSettings) {
     settings = storedSettings
-    for (let i = 0; i < Object.keys(settings).length - 1; i++) {
+    for (let i = 0; i < Object.keys(settings).length; i++) {
       if (Object.values(settings)[i] === true) {
         switchBtn[i].checked = true
       }
-      if (switchBtn[3].checked) {
-        rangeContainer.classList.add("show")
-      }
     }
-    rangeSelector.value = settings.thresholdRange
-    rangeValue.innerText = rangeSelector.value
   }
 }
+
 
 let isMaximized = false
 function maximizeImage() {
   video.classList.toggle("hidden")
   canvas.classList.toggle("maximizedCanvas")
-  startbutton.classList.toggle("hidden")
+  takePhoto.classList.toggle("hidden")
   settingsContainer.classList.toggle("showSettingsContainer")
   isMaximized = isMaximized ? false : true
   saveSettings()
 }
 
-
-// Mostra e set o valor do threshold
-rangeSelector.addEventListener('input', function () {
-  rangeValue.textContent = this.value;
-  settings.thresholdRange = this.value
-});
-
-//Comportamento dos switchs no canvas e visualização do threshold
+//Comportamento dos switchs no canvas
 for (let i = 0; i < switchBtn.length; i++) {
   switchBtn[i].addEventListener("input", (evt) => {
     settings[Object.keys(settings)[i]] = switchBtn[i].checked;
-
     if (photo) {
       processImage(canvas, ctx)
-    }
-
-    if (switchBtn[3].checked) {
-      rangeContainer.classList.add("show")
-    } else {
-      rangeContainer.classList.remove("show")
     }
   })
 }
@@ -202,39 +174,27 @@ function processImage(canvas, ctx) {
 
   if (settings) {
     if (settings.blur) { blurARGB(data, canvas, radius = 1) }
-    if (settings.dilate) { dilate(data, canvas) }
-    if (settings.invertColors) { invertColors(data) }
-    if (settings.thresholdFilter) { thresholdFilter(data, level = rangeSelector.value); } //0.46 
+    if (settings.grayscale) { grayscale(data, canvas) }
+    if (settings.negative) { negative(data) }
+    if (settings.binarize) { otsuBinarize(canvas,data) }
   }
   ctx.putImageData(imageData, 0, 0);
 }
 
-
-function thresholdFilter(pixels, level) {
-  if (level === undefined) {
-    level = 0.5;
+function grayscale(data, w, h) {
+  for(let i = 0; i < data.length; i += 4) {
+      let brightness = RED_INTENCITY_COEF * data[i] + GREEN_INTENCITY_COEF * data[i + 1] + BLUE_INTENCITY_COEF * data[i + 2];
+      data[i] = brightness;
+      data[i + 1] = brightness;
+      data[i + 2] = brightness;
   }
-  const thresh = Math.floor(level * 255);
+};
+
+function negative(pixels) {
   for (let i = 0; i < pixels.length; i += 4) {
-    const r = pixels[i];
-    const g = pixels[i + 1];
-    const b = pixels[i + 2];
-    const gray = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-    let val;
-    if (gray >= thresh) {
-      val = 255;
-    } else {
-      val = 0;
-    }
-    pixels[i] = pixels[i + 1] = pixels[i + 2] = val;
-  }
-}
-
-function invertColors(pixels) {
-  for (var i = 0; i < pixels.length; i += 4) {
-    pixels[i] = pixels[i] ^ 255; // Invert Red
-    pixels[i + 1] = pixels[i + 1] ^ 255; // Invert Green
-    pixels[i + 2] = pixels[i + 2] ^ 255; // Invert Blue
+    pixels[i] = pixels[i] ^ 255; 
+    pixels[i + 1] = pixels[i + 1] ^ 255; 
+    pixels[i + 2] = pixels[i + 2] ^ 255; 
   }
 }
 
@@ -393,83 +353,74 @@ function blurARGB(pixels, canvas, radius) {
   setPixels(pixels, argb);
 }
 
-function dilate(pixels, canvas) {
-  let currIdx = 0;
-  const maxIdx = pixels.length ? pixels.length / 4 : 0;
-  const out = new Int32Array(maxIdx);
-  let currRowIdx, maxRowIdx, colOrig, colOut, currLum;
+function otsuBinarize(canvas, data){
+  let w = canvas.width, h = canvas.height;
+  let histogram = hist(data, w, h);
+  let threshold = otsu(histogram, w*h);
+  binarize(threshold, data, w, h);
+}
 
-  let idxRight, idxLeft, idxUp, idxDown;
-  let colRight, colLeft, colUp, colDown;
-  let lumRight, lumLeft, lumUp, lumDown;
+let RED_INTENCITY_COEF = 0.2126;
+let GREEN_INTENCITY_COEF = 0.7152;
+let BLUE_INTENCITY_COEF = 0.0722;
 
-  while (currIdx < maxIdx) {
-    currRowIdx = currIdx;
-    maxRowIdx = currIdx + canvas.width;
-    while (currIdx < maxRowIdx) {
-      colOrig = colOut = getARGB(pixels, currIdx);
-      idxLeft = currIdx - 1;
-      idxRight = currIdx + 1;
-      idxUp = currIdx - canvas.width;
-      idxDown = currIdx + canvas.width;
+function hist(data, w, h) {
+  let brightness;
+  let brightness256Val;
+  let histArray = Array.apply(null, new Array(256)).map(Number.prototype.valueOf,0);
 
-      if (idxLeft < currRowIdx) {
-        idxLeft = currIdx;
-      }
-      if (idxRight >= maxRowIdx) {
-        idxRight = currIdx;
-      }
-      if (idxUp < 0) {
-        idxUp = 0;
-      }
-      if (idxDown >= maxIdx) {
-        idxDown = currIdx;
-      }
-      colUp = getARGB(pixels, idxUp);
-      colLeft = getARGB(pixels, idxLeft);
-      colDown = getARGB(pixels, idxDown);
-      colRight = getARGB(pixels, idxRight);
-
-      //compute luminance
-      currLum =
-        77 * ((colOrig >> 16) & 0xff) +
-        151 * ((colOrig >> 8) & 0xff) +
-        28 * (colOrig & 0xff);
-      lumLeft =
-        77 * ((colLeft >> 16) & 0xff) +
-        151 * ((colLeft >> 8) & 0xff) +
-        28 * (colLeft & 0xff);
-      lumRight =
-        77 * ((colRight >> 16) & 0xff) +
-        151 * ((colRight >> 8) & 0xff) +
-        28 * (colRight & 0xff);
-      lumUp =
-        77 * ((colUp >> 16) & 0xff) +
-        151 * ((colUp >> 8) & 0xff) +
-        28 * (colUp & 0xff);
-      lumDown =
-        77 * ((colDown >> 16) & 0xff) +
-        151 * ((colDown >> 8) & 0xff) +
-        28 * (colDown & 0xff);
-
-      if (lumLeft > currLum) {
-        colOut = colLeft;
-        currLum = lumLeft;
-      }
-      if (lumRight > currLum) {
-        colOut = colRight;
-        currLum = lumRight;
-      }
-      if (lumUp > currLum) {
-        colOut = colUp;
-        currLum = lumUp;
-      }
-      if (lumDown > currLum) {
-        colOut = colDown;
-        currLum = lumDown;
-      }
-      out[currIdx++] = colOut;
-    }
+  for (let i = 0; i < data.length; i += 4) {
+      brightness = RED_INTENCITY_COEF * data[i] + GREEN_INTENCITY_COEF * data[i + 1] + BLUE_INTENCITY_COEF * data[i + 2];
+      brightness256Val = Math.floor(brightness);
+      histArray[brightness256Val] += 1;
   }
-  setPixels(pixels, out);
+  
+  return histArray;
 };
+
+function otsu(histogram, total) {
+  let sum = 0;
+  for (let i = 1; i < 256; ++i)
+      sum += i * histogram[i];
+  let sumB = 0;
+  let wB = 0;
+  let wF = 0;
+  let mB;
+  let mF;
+  let max = 0.0;
+  let between = 0.0;
+  let threshold1 = 0.0;
+  let threshold2 = 0.0;
+  for (let i = 0; i < 256; ++i) {
+      wB += histogram[i];
+      if (wB == 0)
+          continue;
+      wF = total - wB;
+      if (wF == 0)
+          break;
+      sumB += i * histogram[i];
+      mB = sumB / wB;
+      mF = (sum - sumB) / wF;
+      between = wB * wF * Math.pow(mB - mF, 2);
+      if ( between >= max ) {
+          threshold1 = i;
+          if ( between > max ) {
+              threshold2 = i;
+          }
+          max = between;            
+      }
+  }
+  return ( threshold1 + threshold2 ) / 2.0;
+};
+
+function binarize(threshold, data, w, h) {
+  let val;
+  
+  for(let i = 0; i < data.length; i += 4) {
+      let brightness = RED_INTENCITY_COEF * data[i] + GREEN_INTENCITY_COEF * data[i + 1] + BLUE_INTENCITY_COEF * data[i + 2];
+      let val = ((brightness > threshold) ? 255 : 0);
+      data[i] = val;
+      data[i + 1] = val;
+      data[i + 2] = val;
+  }
+}
