@@ -57,17 +57,17 @@ function calculatePercentual(ciclos, ciclosPass) {
   }
 }
 
-//Usar ternario
 function validaSelected() {
-  if (selectedTipo /* === "Teste" || selectedTipo === "Aprovado" */) {
-    return true
-  // } else if (selectedTipo === "Falha") {
-  //   // if (inFalha.value && inCicloTest.value && inCicloPass.value) {
-  //     return true
-  //   // }
-  } else {
-    return false
-  }
+  return selectedTipo ? true : false
+  // if (selectedTipo /* === "Teste" || selectedTipo === "Aprovado" */) {
+  //   return true
+  // // } else if (selectedTipo === "Falha") {
+  // //   // if (inFalha.value && inCicloTest.value && inCicloPass.value) {
+  // //     return true
+  // //   // }
+  // } else {
+  //   return false
+  // }
 }
 
 function colapseInputFalhas() {
@@ -99,7 +99,6 @@ function selectTipoFalha() {
   inputFalhas.classList.add("toggleInputFalhas");
   resetSelectColors()
   selectFalha.style.cssText += 'background-color:#e94041';
-  // inFalha.focus()
   selectedTipo = 'Falha'
 }
 
