@@ -114,8 +114,8 @@ function processData(text) {
 
 function getValues(data) {
   const texto = data;
-
-  for (let i = 0; i < Object.keys(valoresCapturados).length; i++) {
+  const valoresCapturadosKeys = Object.keys(valoresCapturados)
+  for (let i = 0; i < valoresCapturadosKeys.length; i++) {
     if (Object.values(valoresCapturados)[i] !== null){ 
       continue
     }
@@ -132,7 +132,7 @@ function getValues(data) {
       });
 
       let resultado = calculate(valores);
-      valoresCapturados[Object.keys(valoresCapturados)[i]] = resultado;
+      valoresCapturados[valoresCapturadosKeys[i]] = resultado;
     } else {
       continue
     }
@@ -180,21 +180,20 @@ function renderValoresCapturados () {
   document.getElementById("capturados").textContent = null;
   const documentFragment = document.createDocumentFragment();
 
-  for(const [key, value] of Object.entries(valoresCapturados)) {
-    let index = 0;
+  const valoresCapturadosKeys = Object.keys(valoresCapturados)
+  valoresCapturadosKeys.forEach(( key, index ) => {
     const prePhrase = document.createElement('pre');
-    if(value === null) {
+    if(valoresCapturados[key] === null) {
       prePhrase.setAttribute('class',"capturados-pendente")
       prePhrase.textContent = `--- ${key}`;
     } else  {
-      (value >= Object.values(testes)[index]['range']) ? 
+      (valoresCapturados[key] >= Object.values(testes)[index]['range']) ? 
         prePhrase.setAttribute('class','capturados-aprovado') : 
         prePhrase.setAttribute('class','capturados-reprovado');
-      prePhrase.textContent = `${value*100}% ${key}`;
+      prePhrase.textContent = `${ valoresCapturados[key]*100}% ${key}`;
     }
-    index++
     documentFragment.append(prePhrase)
-  }
+  })
   document.getElementById("capturados").append(documentFragment)
 }
 
